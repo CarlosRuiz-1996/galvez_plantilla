@@ -15,13 +15,17 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Inicio') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    {{-- <x-nav-link :href="route('hospital')" :active="request()->routeIs('hospital')">
+                        {{ __('Hospitales') }}
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('hospital')" :active="Str::startsWith(request()->route()->getName(), 'hospital')">
                         {{ __('Hospitales') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    
+                    <x-nav-link :href="route('producto')" :active="Str::startsWith(request()->route()->getName(), 'producto')">
                         {{ __('Productos') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('pedido')" :active="Str::startsWith(request()->route()->getName(), 'pedido')">
                         {{ __('Pedidos') }}
                     </x-nav-link>
                 </div>
