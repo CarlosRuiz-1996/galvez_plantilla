@@ -14,6 +14,10 @@
                 <div class="flex">
 
                     <div class="w-1/2 p-2">
+
+                        <div>
+                           Gestionar Catalogos
+                        </div>
                         <h1>Ingresos</h1>
 
                         <x-nav-tab-ingreso />
