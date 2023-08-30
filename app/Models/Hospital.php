@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Hospital extends Model
 {
     use HasFactory;
-    protected $table = 'hospitales';
+    protected $table = 'hospitals';
 
     // relacion One to Many
     public function pedidos(){
         // llamo a otro modelo
-        return $this->hasMany('App\Models\Pedido');
+        return $this->hasMany('App\Models\Order');
     }
 
 }

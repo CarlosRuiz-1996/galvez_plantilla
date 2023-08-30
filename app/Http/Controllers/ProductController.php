@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Producto;
+use App\Models\Product;
 use Illuminate\Support\Facades\Redirect;
 
 
-class ProductoController extends Controller
+class ProductController extends Controller
 {
     public function __construct()
     {
@@ -16,14 +16,14 @@ class ProductoController extends Controller
     //
     public function index()
     {
-        $productos = Producto::orderBy('id', 'desc')->paginate(10);
+        $productos = Product::orderBy('id', 'desc')->paginate(10);
         // var_dump($productos);
-        return view('productos.index', ['productos' => $productos]);
+        return view('admin.products.index', ['productos' => $productos]);
     }
 
     public function crear()
     {
-        return view('productos.crear');
+        return view('admin.products.crear');
     }
 
 
@@ -49,7 +49,7 @@ class ProductoController extends Controller
         $precio = $request->input('precio');
 
 
-        $prodcuto = new Producto();
+        $prodcuto = new Product();
 
         $prodcuto->nombre = $nombre;
         $prodcuto->descripcion = $descripcion;
@@ -59,15 +59,15 @@ class ProductoController extends Controller
         // die;
 
         $prodcuto->save();
-        return Redirect::route('producto')->with('status', 'Producto guardado correctamente');
+        return Redirect::route('admin.products')->with('status', 'Producto guardado correctamente');
     }
 
 
     public function editar($id)
     {
-        $producto = Producto::find($id);
+        $producto = Product::find($id);
 
-        return view('productos.crear', ['producto' => $producto]);
+        return view('admin.products.crear', ['producto' => $producto]);
     }
 
 
@@ -76,7 +76,7 @@ class ProductoController extends Controller
 
         $id = $request->input('id');
 
-        $prodcuto = Producto::findOrFail($id);
+        $prodcuto = Product::findOrFail($id);
 
 
         //validacion del form
@@ -102,18 +102,18 @@ class ProductoController extends Controller
 
 
         $prodcuto->update();
-        return Redirect::route('producto')->with('status', 'Producto actualizado correctamente');
+        return Redirect::route('admin.products')->with('status', 'Producto actualizado correctamente');
     }
 
 
 
     public function eliminar ($id){
-        $prodcuto = Producto::findOrFail($id);
+        $prodcuto = Product::findOrFail($id);
 
         // Eliminar el hospital
         $prodcuto->delete();
     
-        return redirect()->route('producto')->with('status', 'Producto eliminado correctamente');
+        return redirect()->route('admin.products')->with('status', 'Producto eliminado correctamente');
 
     }
 }

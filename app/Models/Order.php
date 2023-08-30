@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Pedido extends Model
+class Order extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,6 @@ class Pedido extends Model
     
     public function detalles()
     {
-        return $this->hasMany('App\Models\DetallePedido');
+        return $this->hasMany('App\Models\Detail');
     }
 }

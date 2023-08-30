@@ -18,13 +18,13 @@ class HospitalController extends Controller
     public function index(){
         $hospitales = Hospital::orderBy('id', 'desc')->paginate(9);
         // var_dump($images);
-        return view('hospitales.index', ['hospitales'=>$hospitales]);
+        return view('admin.hospitals.index', ['hospitales'=>$hospitales]);
     }
 
     public function detalle($id){
         $hospital = Hospital::find($id);
         // var_dump($images);
-        return view('hospitales.detalle', ['hospital'=>$hospital]);
+        return view('admin.hospitals.detalle', ['hospital'=>$hospital]);
     }
 
 
@@ -32,7 +32,7 @@ class HospitalController extends Controller
         $hospital = Hospital::find($id);
 
 
-        return view('hospitales.editar',['hospital'=>$hospital]);
+        return view('admin.hospitals.editar',['hospital'=>$hospital]);
 
     }
 
@@ -84,7 +84,7 @@ class HospitalController extends Controller
 
         $hospital->update();
 
-        return Redirect::route('hospital')->with('status', 'Hospital actualizado correctamente');
+        return Redirect::route('admin.hospitals')->with('status', 'Hospital actualizado correctamente');
     }
 
     public function eliminar ($id){
@@ -93,7 +93,7 @@ class HospitalController extends Controller
         // Eliminar el hospital
         $hospital->delete();
     
-        return redirect()->route('hospital')->with('status', 'Hospital eliminado correctamente');
+        return redirect()->route('admin.hospitals')->with('status', 'Hospital eliminado correctamente');
 
     }
 

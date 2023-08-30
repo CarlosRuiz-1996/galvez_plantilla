@@ -11,17 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pedidos', function (Blueprint $table) {
+        Schema::disableForeignKeyConstraints();
+
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('hospital_id');
-            $table->string('fecha_pedido');
-            $table->text('observaciones');
-            $table->integer('estatus');
-            $table->float('monto');
+            $table->string('deadline');//fecha de la entrega
+            $table->text('observations');
+            $table->integer('status');
+            $table->float('total');
             $table->timestamps();
             // Definir las claves foráneas
             $table->foreign('hospital_id')->references('id')->on('hospitales')->onDelete('cascade');
         });
+
+        Schema::enableForeignKeyConstraints();
+
     }
 
     /**

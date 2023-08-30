@@ -15,14 +15,14 @@ class HospitalesTableSeeder extends Seeder
         for($i =1; $i<=20; $i++){
 
         Hospital::create([
-            'nombre' => 'Hospital '.$i,
-            'direccion' => 'Avenida '.$i,
-            'telefono' => '555-555-5555',
-            'correo' => 'hospital'.$i.'@example.com',
+            'name' => 'Hospital '.$i,
+            'address' => 'Avenida '.$i,
+            'phone' => '555-555-5555',
+            'email' => 'hospital'.$i.'@example.com',
             'image_path'=>'imagen'.$i.'.png',
-            'contacto_nombre' => 'Contacto '.$i,
-            'contacto_telefono' => '111-111-1111',
-            'contacto_correo' => 'contacto'.$i.'@example.com',
+            'contact_name' => 'Contacto '.$i,
+            'contact_phone' => '111-111-1111',
+            'contact_email' => 'contacto'.$i.'@example.com',
         ]);
     }
     }

@@ -17,7 +17,7 @@
                     <div class="flex items-center justify-between pb-4">
                         <div>
                             {{-- espacio para el buscador --}}
-                            <a href="{{route('producto.crear')}}" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
+                            <a href="{{route('admin.products.crear')}}" type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
                             Nuevo +
                             </a>
 
@@ -61,9 +61,9 @@
                                     <td class="px-6 py-4" data-delivery="{{ $producto->stock }}">{{ $producto->stock }}
                                     </td>
                                     <td class="px-6 py-4" data-status="{{ $producto->estatus }}">
-                                        <a href="{{ route('producto.editar', $producto->id) }}"
+                                        <a href="{{ route('admin.products.editar', $producto->id) }}"
                                             class="text-blue-600 hover:underline">Editar</a>
-                                        <form action="{{ route('producto.eliminar', $producto->id) }}" method="POST">
+                                        <form action="{{ route('admin.products.eliminar', $producto->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:underline">Eliminar</button>

@@ -9,9 +9,9 @@
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <x-alert />
             <br>
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class=" bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div
-                    class="block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+                    class=" block rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
 
                     <?php //var_dump($hospital->pedidos)
                     ?>
@@ -19,9 +19,10 @@
 
                         <div class="w-1/2 p-2 text-center">
                             @if ($hospital->image_path)
-                                <img src="" alt="">
+                            <img src="{{ asset('img/vacio.jpg') }}" class="w-100" alt="">
                             @else
-                                <img src="{{ asset('img/vacio.jpg') }}" class="w-100" alt="">
+                                <img src="{{ asset('img/vacia.png') }}" class="w-100" alt="">
+
                             @endif
 
 
@@ -70,7 +71,7 @@
                         </div>
 
                     </div>
-                    <div class="mt-4 p-5">
+                    <div class="mt-4  p-5">
 
                         @if (count($hospital->pedidos) > 0)
                             <hr>

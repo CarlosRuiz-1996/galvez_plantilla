@@ -13,14 +13,14 @@ class ProductosTableSeeder extends Seeder
      */
     public function run(): void
     {
-        for ($i = 1; $i <= 20; $i++) {
+        // for ($i = 1; $i <= 20; $i++) {
 
-            Producto::create([
-                'nombre' => 'Producto ' . $i,
-                'descripcion' => 'Descripcion del producto ' . $i,
-                'stock' => '10' . $i,
-                'precio'=> 10*$i
-            ]);
-        }
+        //     Producto::create([
+        //         'nombre' => 'Producto ' . $i,
+        //         'descripcion' => 'Descripcion del producto ' . $i,
+        //         'stock' => '10' . $i,
+        //         'precio'=> 10*$i
+        //     ]);
+        // }
     }
 }

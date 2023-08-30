@@ -18,14 +18,14 @@
                     {{-- <x-nav-link :href="route('hospital')" :active="request()->routeIs('hospital')">
                         {{ __('Hospitales') }}
                     </x-nav-link> --}}
-                    <x-nav-link :href="route('hospital')" :active="Str::startsWith(request()->route()->getName(), 'hospital')">
+                    <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(request()->route()->getName(), 'admin.hospitals')">
                         {{ __('Hospitales') }}
                     </x-nav-link>
                     
-                    <x-nav-link :href="route('producto')" :active="Str::startsWith(request()->route()->getName(), 'producto')">
+                    <x-nav-link :href="route('admin.products')" :active="Str::startsWith(request()->route()->getName(), 'admin.products')">
                         {{ __('Productos') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('pedido')" :active="Str::startsWith(request()->route()->getName(), 'pedido')">
+                    <x-nav-link :href="route('admin.orders')" :active="Str::startsWith(request()->route()->getName(), 'admin.orders')">
                         {{ __('Pedidos') }}
                     </x-nav-link>
                 </div>

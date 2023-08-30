@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\HospitalController;
-use App\Http\Controllers\PedidoController;
-use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,29 +31,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //hospitales
-    Route::get('/hospitales', [HospitalController::class, 'index'])->name('hospital');
-    Route::get('/hospitales/detalle/{id?}', [HospitalController::class, 'detalle'])->name('hospital.detalle');
-    Route::get('/hospitales/editar/{id?}', [HospitalController::class, 'editar'])->name('hospital.editar');
-    Route::delete('/hospitales/eliminar/{id?}', [HospitalController::class, 'eliminar'])->name('hospital.eliminar');
-    Route::put('/hospitales/update', [HospitalController::class, 'update'])->name('hospital.update');
+    Route::get('admin/hospitals', [HospitalController::class, 'index'])->name('admin.hospitals');
+    Route::get('admin/hospitals/detalle/{id?}', [HospitalController::class, 'detalle'])->name('admin.hospitals.detalle');
+    Route::get('admin/hospitals/editar/{id?}', [HospitalController::class, 'editar'])->name('admin.hospitals.editar');
+    Route::delete('admin/hospitals/eliminar/{id?}', [HospitalController::class, 'eliminar'])->name('admin.hospitals.eliminar');
+    Route::put('admin/hospitals/update', [HospitalController::class, 'update'])->name('admin.hospitals.update');
 
     //prodcutos
-    Route::get('/productos', [ProductoController::class, 'index'])->name('producto');
-    Route::get('/productos/crear/', [ProductoController::class, 'crear'])->name('producto.crear');
-    Route::post('/productos/guardar/', [ProductoController::class, 'guardar'])->name('producto.guardar');
-    Route::get('/productos/editar/{id?}', [ProductoController::class, 'editar'])->name('producto.editar');
-    Route::delete('/productos/eliminar/{id?}', [ProductoController::class, 'eliminar'])->name('producto.eliminar');
-    Route::post('/productos/update', [ProductoController::class, 'update'])->name('producto.update');
+    Route::get('admin/products', [ProductController::class, 'index'])->name('admin.products');
+    Route::get('admin/products/crear/', [ProductController::class, 'crear'])->name('admin.products.crear');
+    Route::post('admin/products/guardar/', [ProductController::class, 'guardar'])->name('admin.products.guardar');
+    Route::get('admin/products/editar/{id?}', [ProductController::class, 'editar'])->name('admin.products.editar');
+    Route::delete('admin/products/eliminar/{id?}', [ProductController::class, 'eliminar'])->name('admin.products.eliminar');
+    Route::post('admin/products/update', [ProductController::class, 'update'])->name('admin.products.update');
 
     //pedidos
-    Route::get('/pedidos', [PedidoController::class, 'index'])->name('pedido');
-    Route::get('/pedidos/detalle/{id?}', [PedidoController::class, 'detalle'])->name('pedido.detalle');
+    Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
+    Route::get('admin/orders/detalle/{id?}', [OrderController::class, 'detalle'])->name('admin.orders.detalle');
 
-    // Route::get('/pedidos/crear/', [PedidoController::class, 'crear'])->name('pedido.crear');
-    // Route::post('/pedidos/guardar/', [PedidoController::class, 'guardar'])->name('pedido.guardar');
-    Route::put('/pedidos/liberar', [PedidoController::class, 'liberar'])->name('pedido.liberar');
-    // Route::delete('/pedidos/eliminar/{id?}', [PedidoController::class, 'eliminar'])->name('pedido.eliminar');
-    // Route::post('/pedidos/update', [PedidoController::class, 'update'])->name('pedido.update');
+    
+    Route::put('admin/orders/liberar', [OrderController::class, 'liberar'])->name('admin.orders.liberar');
+   
 
 });
 

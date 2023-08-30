@@ -16,7 +16,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
                     {{-- <form action="{{ route('producto.guardar') }}" method="POST"> --}}
-                    <form action="{{ isset($producto) ? route('producto.update') : route('producto.guardar') }}"
+                    <form action="{{ isset($producto) ? route('admin.products.update') : route('admin.products.guardar') }}"
                         method="post">
 
                         @csrf
@@ -68,7 +68,7 @@
                                 Guardar producto
                             </button>
 
-                            <a href="{{ route('producto') }}" type="button"
+                            <a href="{{ route('admin.products') }}" type="button"
                                 class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 dark:bg-gray-600 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                 Cancelar
                             </a>
