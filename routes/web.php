@@ -52,7 +52,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/orders/{pedido}/detalle', [OrderController::class, 'detalle'])->name('admin.orders.detalle');
     Route::put('admin/orders/liberar', [OrderController::class, 'liberar'])->name('admin.orders.liberar');
     //carrito
-    Route::get('carrito/', [CarritoContoller::class, 'index'])->name('carrito.carrito');
+    Route::get('carrito/', [CarritoContoller::class, 'index2'])->name('carrito.carrito');
+    // routes/web.php
+
+Route::post('carrito/add-to-cart/{product}', [CarritoContoller::class, 'addToCart'])->name('cart.add');
+Route::get('carrito/cart', [CarritoContoller::class, 'viewCart'])->name('cart.viewCart');
+Route::post('carrito/update', [CarritoContoller::class, 'updateCart'])->name('cart.update');
+
    
 
 });
