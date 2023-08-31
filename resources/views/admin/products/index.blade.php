@@ -41,7 +41,6 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">NOMBRE</th>
-                                <th scope="col" class="px-6 py-3">DESCRIPCION</th>
                                 <th scope="col" class="px-6 py-3">COSTO</th>
                                 <th scope="col" class="px-6 py-3">STOCK</th>
                                 <th scope="col" class="px-6 py-3">ACCIONES</th>
@@ -52,11 +51,9 @@
                             @foreach ($productos as $producto)
                                 <tr
                                     class="table-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-4" data-date="{{ $producto->nombre }}">{{ $producto->nombre }}
-                                    </td>
                                     <td class="px-6 py-4" data-amount="{{ $producto->descripcion }}">
                                         {{ $producto->descripcion }}</td>
-                                        <td class="px-6 py-4" data-delivery="{{ $producto->precio }}">${{ $producto->precio }}
+                                        <td class="px-6 py-4" data-delivery="{{ $producto->total }}">${{ $producto->total }}
                                         </td>
                                     <td class="px-6 py-4" data-delivery="{{ $producto->stock }}">{{ $producto->stock }}
                                     </td>

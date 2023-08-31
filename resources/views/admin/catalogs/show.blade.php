@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight">
-            {{ __('Catalogos') }}
+            {{ __('Catalogo de '.$catalogo) }}
         </h2>
     </x-slot>
 
@@ -35,7 +35,7 @@
                             </div>
                             <input type="text" id="table-search"
                                 class="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Busca un producto">
+                                placeholder="Buscar">
                         </div>
                     </div>
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -43,7 +43,7 @@
                             <tr>
                                 <th scope="col" class="px-6 py-3">Nombre</th>
                                 <th scope="col" class="px-6 py-3">Estatus</th>
-                                <th scope="col" class="px-6 py-3">Fecha de creación</th>
+                                <th scope="col" class="px-6 py-3">Fecha de alta</th>
                                 <th scope="col" class="px-6 py-3">Acciones</th>
                             </tr>
                         </thead>
@@ -52,38 +52,52 @@
                             @foreach ($listado as $list)
                                 <tr
                                     class="table-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="px-6 py-4" data-date="{{ $list->name }}">{{ $list->name }}
+                                    <td class="px-6 py-4" data-name="{{ $list->name }}">{{ $list->name }}
                                     </td>
-                                    <td class="px-6 py-4" data-amount="{{ $list->status }}">
-                                        {{ $list->status }}</td>
-                                    <td class="px-6 py-4" data-delivery="{{ $list->created_at }}">
+                                    <td class="px-6 py-4" data-status="{{ $list->status }}">
+                                        @if ($list->status == 1)
+                                            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-100 dark:bg-gray-800 dark:text-blue-400"
+                                                role="alert">
+                                                <span class="font-medium">ACTIVO</span>
+                                            </div>
+                                        @else
+                                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-600"
+                                                role="alert">
+                                                <span class="font-medium">ACTIVO</span>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4" data-created_at="{{ $list->created_at }}">
                                         {{ $list->created_at }}
                                     </td>
-                                    <td class="px-6 py-4" data-status="{{ $producto->estatus }}">
-                                        <a href="{{ route('admin.products.editar', $producto->id) }}"
+                                    <td class="px-6 py-4">
+                                        <a href="{{ route('admin.products.editar', 1) }}"
                                             class="text-blue-600 hover:underline">Editar</a>
-                                        <form action="{{ route('admin.products.eliminar', $producto->id) }}"
+                                        {{-- <form action="{{ route('admin.products.eliminar', $producto->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
                                                 class="text-red-600 hover:underline">Eliminar</button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
 
                         </tbody>
                     </table>
+
+
                 </div>
+                {{-- paginacion --}}
 
+                <div class="clearfix"></div>
+                <div class="pb-12">
+                    {{ $listado->links() }}
+                </div>
             </div>
-            {{-- paginacion --}}
 
-            <div class="clearfix"></div>
-            {{-- <div class="pb-12">
-                {{ $listado->links() }}
-            </div> --}}
+
         </div>
     </div>
 </x-app-layout>

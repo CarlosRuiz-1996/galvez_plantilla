@@ -38,24 +38,30 @@ class CatalogController extends Controller
     public function show($ctg)
     {
         $listado="";
+        $catalogo="";
         if($ctg==1){
-            $listado = Brand::all();
+            $catalogo="Marca";
+            $listado = Brand::paginate(10);
         }else if($ctg==2){
-            $listado = Grammage::all();
+            $catalogo="Gramaje";
+            $listado = Grammage::paginate(10);
 
         }else if($ctg==3){
-            $listado = Presentation::all();
+            $catalogo="Presentación";
+            $listado = Presentation::paginate(10);
 
         }else if($ctg==4){
-            $listado = Iva::all();
+            $catalogo="Iva";
+            $listado = Iva::paginate(10);
 
         }else if($ctg==5){
-            $listado = Ieps::all();
+            $catalogo="IEPS";
+            $listado = Ieps::paginate(10);
 
         }else{
             return view('admin.catalogs');
         }
-        return view('admin.catalogs.show', ['listado'=>$listado]);
+        return view('admin.catalogs.show', ['listado'=>$listado, 'catalogo'=>$catalogo]);
 
     }
 

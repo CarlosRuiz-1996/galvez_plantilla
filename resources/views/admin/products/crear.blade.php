@@ -6,7 +6,6 @@
             @else
                 {{ __('Crear producto') }}
             @endif
-
         </h2>
     </x-slot>
     <div class="">
@@ -15,67 +14,119 @@
             <br>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                    {{-- <form action="{{ route('producto.guardar') }}" method="POST"> --}}
-                    <form action="{{ isset($producto) ? route('admin.products.update') : route('admin.products.guardar') }}"
-                        method="post">
-
+                    <form action="{{ isset($producto) ? route('admin.products.update', ['id' => $producto->id]) : route('admin.products.guardar') }}" method="post">
                         @csrf
                         @if (isset($producto) && is_object($producto))
                             <input type="text" hidden name="id" value="{{ $producto->id ?? '' }}" />
                         @endif
-                        <div>
-                            <label for="nombre"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del
-                                producto</label>
-                            <input type="text" name="nombre" id="nombre"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                value="{{ $producto->nombre ?? '' }}">
-                            <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
 
-                        </div>
                         <div>
-
-                            <label for="descripcion"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción</label>
-                            <input type="text" name="descripcion" id="descripcion"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                value="{{ $producto->descripcion ?? '' }}">
+                            <label for="descripcion" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Descripción</label>
+                            <input type="text" name="descripcion" id="descripcion" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="{{ $producto->descripcion ?? '' }}">
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
-
                         </div>
-                        <div>
 
-                            <label for="stock"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Stock</label>
-                            <input type="number" name="stock" id="stock"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                value="{{ $producto->stock ?? '' }}">
+                        <div>
+                            <label for="grammage_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Grammage</label>
+                            <select name="grammage_id" id="grammage_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="" disabled selected>Select Grammage</option>
+                                @foreach($grammages as $grammage)
+                                    <option value="{{ $grammage->id }}" {{ (isset($producto) && $producto->grammage_id == $grammage->id) ? 'selected' : '' }}>{{ $grammage->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('grammage_id')" class="mt-2" />
+                        </div>
+                        
+
+                        <div>
+                            <label for="presentation_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Presentación</label>
+                            <select name="presentation_id" id="presentation_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="" disabled selected>Selecciona la Presentación</option>
+                                @foreach($presentations as $presentation)
+                                    <option value="{{ $presentation->id }}" {{ (isset($producto) && $producto->presentation_id == $presentation->id) ? 'selected' : '' }}>{{ $presentation->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('presentation_id')" class="mt-2" />
+                        </div>
+                        
+
+                        <div>
+                            <label for="brand_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Brand ID</label>
+                            <select name="brand_id" id="brand_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="" disabled selected>Select a brand</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}" {{ isset($producto) && $producto->brand_id == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('brand_id')" class="mt-2" />
+                        </div>
+                        
+
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
+                            <input type="text" name="price" id="price" onchange="calcularTotal()" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="{{ $producto->price ?? '' }}">
+                            <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                        </div>
+
+                        <div>
+                            <label for="iva_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">IVA</label>
+                            <select name="iva_id" id="iva_id" onchange="calcularTotal()" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="" disabled selected>Select IVA</option>
+                                @foreach($iva as $iv)
+                                    <option value="{{ $iv->id }}" {{ (isset($producto) && $producto->iva_id == $iv->id) ? 'selected' : '' }}>{{ $iv->amount }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('iva_id')" class="mt-2" />
+                        </div>
+                        
+                        <div>
+                            <label for="ieps_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">IEPS</label>
+                            <select name="ieps_id" id="ieps_id" onchange="calcularTotal()" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="" disabled selected>Select IEPS</option>
+                                @foreach($ieps as $iep)
+                                    <option value="{{ $iep->id }}" {{ (isset($producto) && $producto->ieps_id == $iep->id) ? 'selected' : '' }}>{{ $iep->amount }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('ieps_id')" class="mt-2" />
+                        </div>
+                        
+
+                        <div>
+                            <label for="total" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Total</label>
+                            <input type="text" name="total" id="total" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="{{ $producto->total ?? '' }}" readonly>
+                            <x-input-error :messages="$errors->get('total')" class="mt-2" />
+                        </div>
+
+                        <div>
+                            <label for="stock" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Stock</label>
+                            <input type="number" name="stock" id="stock" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="{{ $producto->stock ?? '' }}" step="10">
                             <x-input-error :messages="$errors->get('stock')" class="mt-2" />
-
                         </div>
-                        <div>
-                            <label for="precio"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Precio</label>
-                            <input type="number" name="precio" id="precio"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                value="{{ $producto->precio ?? '' }}">
-                            <x-input-error :messages="$errors->get('precio')" class="mt-2" />
+                    
 
-                        </div>
                         <div class="mt-6">
-                            <button type="submit"
-                                class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 dark:bg-gray-600 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 dark:bg-gray-600 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                 Guardar producto
                             </button>
 
-                            <a href="{{ route('admin.products') }}" type="button"
-                                class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 dark:bg-gray-600 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+                            <a href="{{ route('admin.products') }}" type="button" class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 dark:bg-gray-600 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                 Cancelar
                             </a>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
+    </div>
+    <script>
+        function calcularTotal() {
+            var price = parseFloat(document.getElementById('price').value);
+            var ivaAmount = parseFloat(document.getElementById('iva_id').options[document.getElementById('iva_id').selectedIndex].text) || 0;
+            var iepsAmount = parseFloat(document.getElementById('ieps_id').options[document.getElementById('ieps_id').selectedIndex].text) || 0;
+        
+            var total = price + (price * (ivaAmount / 100)) + (price * (iepsAmount / 100));
+        
+            document.getElementById('total').value = total.toFixed(2);
+        }
+        </script>
 </x-app-layout>

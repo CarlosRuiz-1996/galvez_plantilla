@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Iva extends Model
 {
-    protected $table = 'iva';
     use HasFactory;
+    protected $table = 'iva';
 }
