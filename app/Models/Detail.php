@@ -8,17 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class Detail extends Model
 {
     use HasFactory;
+    protected $table = 'Detail';
 
-    // public function productos(){
-    //     // llamo a otro modelo
-    //     return $this->hasMany('App\Models\Producto');
-    // }
-    public function producto()
+    protected $fillable = [
+        'order_id',
+        'product_id',
+        'amount',
+        'created_at',
+        'updated_at',
+        // otros campos permitidos en masa
+    ];
+
+    public function product()
     {
-        return $this->belongsTo('App\Models\Product', 'product_id');
+        return $this->belongsTo(Product::class);
     }
-    public function pedido()
+    public function detalles()
     {
-        return $this->belongsTo('App\Models\Order', 'order_id');
+        return $this->hasMany(Detail::class);
     }
 }

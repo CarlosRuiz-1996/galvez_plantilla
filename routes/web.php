@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\CarritoContoller;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,12 +46,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('admin/products/eliminar/{id?}', [ProductController::class, 'eliminar'])->name('admin.products.eliminar');
     Route::post('admin/products/update', [ProductController::class, 'update'])->name('admin.products.update');
 
+
     //pedidos
     Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
-    Route::get('admin/orders/detalle/{id?}', [OrderController::class, 'detalle'])->name('admin.orders.detalle');
-
-    
+    Route::get('/admin/orders/{pedido}/detalle', [OrderController::class, 'detalle'])->name('admin.orders.detalle');
     Route::put('admin/orders/liberar', [OrderController::class, 'liberar'])->name('admin.orders.liberar');
+    //carrito
+    Route::get('carrito/', [CarritoContoller::class, 'index'])->name('carrito.carrito');
    
 
 });

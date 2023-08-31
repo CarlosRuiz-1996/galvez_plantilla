@@ -16,4 +16,9 @@ class Hospital extends Model
         return $this->hasMany('App\Models\Order');
     }
 
+    public function hospital()
+{
+    return $this->belongsTo(Hospital::class);
+}
+
 }

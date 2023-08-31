@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail;
+use App\Models\Hospital;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use Illuminate\Support\Facades\Redirect;
@@ -12,23 +14,32 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
     //
-    public function index()
-    {
-        $pedidos = Order::orderBy('id', 'desc')->paginate(10);
-        // $pedidos = Pedido::with('hospital')->get();
+    public function index(Request $request)
+{
+    $query = Order::orderBy('id', 'desc');
 
-        // var_dump($productos);
-        return view('admin.orders.index', ['pedidos' => $pedidos]);
+    if ($request->filled('hospital_id')) {
+        $query->where('hospital_id', $request->input('hospital_id'));
     }
+
+    if ($request->filled('filter_date')) {
+        $query->whereDate('created_at', $request->input('filter_date'));
+    }
+
+    $pedidos = $query->paginate(10);
+
+    // Obtener la lista de hospitales para el filtro
+    $hospitals = Hospital::all();
+
+    return view('admin.orders.index', ['pedidos' => $pedidos, 'hospitals' => $hospitals]);
+}
+
 
 
     public function detalle($id)
     {
-        $pedido = Order::find($id);
-        // $pedido = Pedido::with('detalles')->find($id);
-
-
-        return view('admin.orders.detalle', ['pedido' => $pedido]);
+        $detallePedidos = Detail::where('order_id', $id)->get();
+        return view('admin.orders.detalle', ['detallePedidos' => $detallePedidos ]);
     }
 
     public function liberar(Request $request)
@@ -42,4 +53,5 @@ class OrderController extends Controller
         $pedido->update();
         return Redirect::route('admin.orders')->with('status', 'Pedido liberado con exito');
     }
+
 }
