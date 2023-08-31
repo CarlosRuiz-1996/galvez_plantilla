@@ -46,6 +46,12 @@ Route::middleware('auth')->group(function () {
    //catalogos
    Route::get('admin/catalogs', [CatalogController::class, 'index'])->name('admin.catalogs');
    Route::get('admin/catalogs/show/{ctg?}', [CatalogController::class, 'show'])->name('admin.catalogs.show');
+   Route::get('admin/catalogs/crear/{ctg?}', [CatalogController::class, 'create'])->name('admin.catalogs.crear');
+   Route::get('admin/catalogs/edit/{ctg?}/{id?}', [CatalogController::class, 'edit'])->name('admin.catalogs.edit');
+   Route::post('admin/catalogs/guardar/{ctg?}', [CatalogController::class, 'store'])->name('admin.catalogs.guardar');
+   Route::post('admin/catalogs/update/{ctg?}', [CatalogController::class, 'update'])->name('admin.catalogs.update');
+   Route::get('admin/catalogs/destroy/{ctg?}/{id?}', [CatalogController::class, 'destroy'])->name('admin.catalogs.destroy');
+   Route::get('admin/catalogs/reactivar/{ctg?}/{id?}', [CatalogController::class, 'reactivar'])->name('admin.catalogs.reactivar');
 
     //carrito
     Route::get('carrito/', [CarritoContoller::class, 'index'])->name('carrito.carrito');

@@ -1,8 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight">
-            {{ __('Catalogo de '.$catalogo) }}
+        <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight inline-flex items-center">
+            <a href="{{route('admin.catalogs')}}" title="ATRAS">
+                <svg class="w-5 h-5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
+                        d="M13 5H3M8 1L3 5l5 4" />
+                </svg>
+            </a>
+            &nbsp;
+            {{ __('Catalogo de ' . $catalogo) }}
         </h2>
+
+
+
     </x-slot>
 
 
@@ -17,7 +28,7 @@
                     <div class="flex items-center justify-between pb-4">
                         <div>
                             {{-- espacio para el buscador --}}
-                            <a href="{{ route('admin.products.crear') }}" type="button"
+                            <a href="{{ route('admin.catalogs.crear',$catalogo) }}" type="button"
                                 class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
                                 Nuevo +
                             </a>
@@ -63,7 +74,7 @@
                                         @else
                                             <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 dark:bg-gray-800 dark:text-red-600"
                                                 role="alert">
-                                                <span class="font-medium">ACTIVO</span>
+                                                <span class="font-medium">BAJA</span>
                                             </div>
                                         @endif
                                     </td>
@@ -71,15 +82,25 @@
                                         {{ $list->created_at }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="{{ route('admin.products.editar', 1) }}"
+                                        @if($list->status!=0)
+                                        <a href="{{ route('admin.catalogs.edit', ['ctg'=>$catalogo,'id'=>$list->id] ) }}"
                                             class="text-blue-600 hover:underline">Editar</a>
-                                        {{-- <form action="{{ route('admin.products.eliminar', $producto->id) }}"
-                                            method="POST">
+                                        <form action="{{ route('admin.catalogs.destroy', ['ctg'=>$catalogo,'id'=>$list->id]) }}"
+                                            method="get">
                                             @csrf
-                                            @method('DELETE')
+
                                             <button type="submit"
                                                 class="text-red-600 hover:underline">Eliminar</button>
-                                        </form> --}}
+                                        </form>
+                                        @else
+                                        <form action="{{ route('admin.catalogs.reactivar', ['ctg'=>$catalogo,'id'=>$list->id]) }}"
+                                            method="get">
+                                            @csrf
+
+                                            <button type="submit"
+                                                class="text-green-600 hover:underline">Reactivar</button>
+                                        </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

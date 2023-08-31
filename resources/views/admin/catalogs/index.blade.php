@@ -3,6 +3,7 @@
         <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight">
             {{ __('Catalogos') }}
         </h2>
+     
     </x-slot>
 
     <div class="py-12">

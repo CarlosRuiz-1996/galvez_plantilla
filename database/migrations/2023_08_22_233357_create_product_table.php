@@ -24,7 +24,6 @@ return new class extends Migration
             $table->unsignedBigInteger('ieps_id');
             $table->float('total');
             $table->integer('stock');
-            $table->integer('precio');
             $table->timestamps();
 
             $table->foreign('grammage_id')->references('id')->on('grammages')->onDelete('cascade');
