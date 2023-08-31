@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('iva', function (Blueprint $table) {
             $table->id();
-            $table->string('amount');//monto
+            $table->string('name');//monto
             $table->integer('status');
             $table->timestamps();
         });

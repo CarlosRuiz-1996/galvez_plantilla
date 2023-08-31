@@ -17,12 +17,7 @@
                     </x-nav-link>
 
                     @can('admin.hospitals')
-                        <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(
-                            request()
-                                ->route()
-                                ->getName(),
-                            'admin.hospitals',
-                        )">
+                        <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(request()->route()->getName(),'admin.hospitals',)">
                             {{ __('Hospitales') }}
                         </x-nav-link>
                     @endcan
@@ -41,6 +36,14 @@
                         'admin.orders',
                     )">
                         {{ __('Pedidos') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.catalogs')" :active="Str::startsWith(
+                        request()
+                            ->route()
+                            ->getName(),
+                        'admin.catalogs',
+                    )">
+                        {{ __('Catalogos') }}
                     </x-nav-link>
                 </div>
             </div>

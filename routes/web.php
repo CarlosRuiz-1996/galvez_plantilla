@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\admin\CatalogController;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,7 +51,10 @@ Route::middleware('auth')->group(function () {
 
     
     Route::put('admin/orders/liberar', [OrderController::class, 'liberar'])->name('admin.orders.liberar');
-   
+   //catalogos
+   Route::get('admin/catalogs', [CatalogController::class, 'index'])->name('admin.catalogs');
+   Route::get('admin/catalogs/show/{ctg?}', [CatalogController::class, 'show'])->name('admin.catalogs.show');
+
 
 });
 
