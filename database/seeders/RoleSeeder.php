@@ -25,25 +25,25 @@ class RoleSeeder extends Seeder
 
         //admin hospital
         
-        Permission::create(['name' => 'admin.hospitals'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.hospitals.detalle'])->syncRoles([$role1]);// aqui asigno el rol al permiso
-        Permission::create(['name' => 'admin.hospitals.editar'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.hospitals.eliminar'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.hospitals.update'])->syncRoles([$role1]);
-        // admin.producto
-        Permission::create(['name' => 'admin.products'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.products.crear'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.products.guardar'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.products.editar'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.products.eliminar'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.products.update'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.hospitals.detalle'])->syncRoles([$role1]);// aqui asigno el rol al permiso
+        // Permission::create(['name' => 'admin.hospitals.editar'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.hospitals.eliminar'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.hospitals.update'])->syncRoles([$role1]);
+        // // admin.producto
+        // Permission::create(['name' => 'admin.products'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.products.crear'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.products.guardar'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.products.editar'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.products.eliminar'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.products.update'])->syncRoles([$role1]);
 
-        // admin.pedido
-        Permission::create(['name' => 'admin.orders'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.orders.detalle'])->syncRoles([$role1]);
-        Permission::create(['name' => 'admin.orders.liberar'])->syncRoles([$role1]);
-        //admin.catalogos
-        Permission::create(['name' => 'admin.catalogs'])->syncRoles([$role1]);
+        // // admin.pedido
+        // Permission::create(['name' => 'admin.orders'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.orders.detalle'])->syncRoles([$role1]);
+        // Permission::create(['name' => 'admin.orders.liberar'])->syncRoles([$role1]);
+        // //admin.catalogos
+        // Permission::create(['name' => 'admin.catalogs'])->syncRoles([$role1]);
 
     }
 }

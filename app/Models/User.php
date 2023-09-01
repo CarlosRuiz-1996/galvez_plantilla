@@ -23,6 +23,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
     ];
@@ -46,4 +47,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // relacion One to Many
+    public function hospital() {
+        return $this->belongsTo(Hospital::class);
+    }
+
+    public function hospitals() {
+        return $this->belongsToMany(Hospital::class, 'user_hospital');
+    }
+
+    public function hasRole($role)
+    {
+        return $this->roles->contains('name', $role);
+    }
 }

@@ -37,13 +37,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Inicio') }}
                     </x-nav-link>
-
-                    @can('admin.hospitals')
+                    {{-- @can('admin') --}}
+                    {{-- @can('admin.hospitals') --}}
                         <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(request()->route()->getName(),'admin.hospitals',)">
                             {{ __('Hospitales') }}
                         </x-nav-link>
-                    @endcan
-                    @can('admin.products')
+                    {{-- @endcan --}}
+                    
 
                     <x-nav-link :href="route('admin.products')" :active="Str::startsWith(
                         request()
@@ -53,19 +53,16 @@
                     )">
                         {{ __('Productos') }}
                     </x-nav-link>
-                    @endcan
-                    @can('admin.orders')
+               
                     <x-nav-link :href="route('admin.orders')" :active="Str::startsWith(
                         request()
                             ->route()
                             ->getName(),
                         'admin.orders',
                     )">
-                        {{ __('Pedidos') }}
+                        {{ __('Reportes') }}
                     </x-nav-link>
-                    @endcan
-
-                    @can('admin.catalogs')
+                    
                     <x-nav-link :href="route('admin.catalogs')" :active="Str::startsWith(
                         request()
                             ->route()
@@ -74,14 +71,14 @@
                     )">
                         {{ __('Catalogos') }}
                     </x-nav-link>
-                    @endcan
+                    {{-- @endcan --}}
                     <x-nav-link :href="route('carrito.carrito')" :active="Str::startsWith(
                         request()
                             ->route()
                             ->getName(),
                         'carrito.carrito',
                     )">
-                        {{ __('Carrito') }}
+                        {{ __('Agregar Producto') }}
                     </x-nav-link>
                     <x-nav-link :href="route('cart.viewCart')" :active="Str::startsWith(
                 request()

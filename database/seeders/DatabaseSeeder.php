@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
 
         //creo un usuario de prueba para la base
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Test',
+            'surname' => 'User',
             'email' => 'test@test.com',
         ])->assignRole('Admin');
 
