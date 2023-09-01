@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\CatalogController;
 use App\Http\Controllers\CarritoContoller;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\OrderController;
@@ -7,16 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,6 +43,16 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('/admin/orders/{pedido}/detalle', [OrderController::class, 'detalle'])->name('admin.orders.detalle');
     Route::put('admin/orders/liberar', [OrderController::class, 'liberar'])->name('admin.orders.liberar');
+   //catalogos
+   Route::get('admin/catalogs', [CatalogController::class, 'index'])->name('admin.catalogs');
+   Route::get('admin/catalogs/show/{ctg?}', [CatalogController::class, 'show'])->name('admin.catalogs.show');
+   Route::get('admin/catalogs/crear/{ctg?}', [CatalogController::class, 'create'])->name('admin.catalogs.crear');
+   Route::get('admin/catalogs/edit/{ctg?}/{id?}', [CatalogController::class, 'edit'])->name('admin.catalogs.edit');
+   Route::post('admin/catalogs/guardar/{ctg?}', [CatalogController::class, 'store'])->name('admin.catalogs.guardar');
+   Route::post('admin/catalogs/update/{ctg?}', [CatalogController::class, 'update'])->name('admin.catalogs.update');
+   Route::get('admin/catalogs/destroy/{ctg?}/{id?}', [CatalogController::class, 'destroy'])->name('admin.catalogs.destroy');
+   Route::get('admin/catalogs/reactivar/{ctg?}/{id?}', [CatalogController::class, 'reactivar'])->name('admin.catalogs.reactivar');
+
     //carrito
     Route::get('carrito/', [CarritoContoller::class, 'index2'])->name('carrito.carrito');
     // routes/web.php

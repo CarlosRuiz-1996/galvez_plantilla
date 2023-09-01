@@ -21,7 +21,7 @@ class ProductController extends Controller
     //
     public function index()
     {
-        $productos = Product::orderBy('id', 'desc')->paginate(10);
+        $productos = Product::orderBy('descripcion', 'asc')->paginate(10);
         // var_dump($productos);
         return view('admin.products.index', ['productos' => $productos]);
     }
@@ -31,9 +31,10 @@ class ProductController extends Controller
         $brands = Brand::all();
         $ieps = Ieps::all();
         $iva = Iva::all();
+
         $grammages = Grammage::all();
         $presentations = Presentation::all();
-        return view('admin.products.crear', compact('brands', 'ieps', 'iva','grammages','presentations'));
+        return view('admin.products.crear', compact('brands', 'ieps', 'iva', 'grammages', 'presentations'));
     }
     public function editar($id)
     {
@@ -43,24 +44,25 @@ class ProductController extends Controller
         $grammages = Grammage::all();
         $presentations = Presentation::all();
         $producto = Product::findOrFail($id);
-    
+
         return view('admin.products.crear', compact('producto', 'brands', 'ieps', 'iva', 'grammages', 'presentations'));
     }
 
 
     public function guardar(Request $request)
     {
-        // Validación
-        $validate = $request->validate([
-            'descripcion' => ['required', 'string'],
+
+        $validate = $this->validate($request, [
+            'descripcion' => ['required', 'string', 'max:250'],
             'grammage_id' => ['required', 'numeric'],
             'presentation_id' => ['required', 'numeric'],
             'brand_id' => ['required', 'numeric'],
             'price' => ['required', 'numeric'],
             'iva_id' => ['required', 'numeric'],
             'ieps_id' => ['required', 'numeric'],
+            'total' => ['required', 'numeric'],
             'stock' => ['required', 'numeric'],
-        ], [
+        ],[
             'descripcion.required' => 'La descripción es obligatoria.',
             'grammage_id.required' => 'El gramage es obligatorio.',
             'presentation_id.required' => 'El tipo de presentación es obligatorio.',
@@ -68,38 +70,49 @@ class ProductController extends Controller
             'price.required' => 'El precio es obligatorio.',
             'iva_id.required' => 'El IVA es obligatorio.',
             'ieps_id.required' => 'El IEPS es obligatorio.',
+            'total.required' => 'El total es obligatorio.',
+
             'stock.required' => 'El stock es obligatorio.',
         ]);
-    
-        // Realizar el cálculo del total
-        $iva = Iva::find($request->iva_id)->amount;
-        $ieps = Ieps::find($request->ieps_id)->amount;
-        $precio = $request->price;
-        $total = $precio + ($precio * $iva / 100) + ($precio * $ieps / 100);
-    
-        // Crear y guardar el producto
-        $producto = new Product();
-        $producto->descripcion = $request->descripcion;
-        $producto->grammage_id = $request->grammage_id;
-        $producto->presentation_id = $request->presentation_id;
-        $producto->brand_id = $request->brand_id;
-        $producto->price = $precio;
-        $producto->iva_id = $request->iva_id;
-        $producto->ieps_id = $request->ieps_id;
-        $producto->total = $total;
-        $producto->stock = $request->stock;
-    
-            $producto->save();
-            return redirect()->route('admin.products')->with('success', 'Producto guardado exitosamente.');
+        //recoger valores del form
+        $descripcion = $request->input('descripcion');
+        $grammage_id = $request->input('grammage_id');
+        $presentation_id = $request->input('presentation_id');
+        $brand_id = $request->input('brand_id');
+        $price = $request->input('price');
+        $iva_id = $request->input('iva_id');
+        $ieps_id = $request->input('ieps_id');
+        $total = $request->input('total');
+        $stock = $request->input('stock');
+
+        //creo nuevo model
+        $product = new Product();
+
+
+        //asignar nuevos valores al objeto prodcuto
+        $product->descripcion = $descripcion;
+        $product->grammage_id = intval($grammage_id);
+        $product->presentation_id = intval($presentation_id);
+        $product->brand_id = intval($brand_id);
+        $product->price = floatval($price);
+        $product->iva_id = intval($iva_id);
+        $product->ieps_id = intval($ieps_id);
+        $product->total = floatval($total);
+        $product->stock = intval($stock);
+
+        // var_dump($product); die;
+        $product->save();
+        return redirect()->route('admin.products')->with('status', 'Producto guardado exitosamente.');
+
     }
-    
+
 
 
     public function update(Request $request)
     {
         $id = $request->input('id');
         $producto = Product::findOrFail($id);
-    
+
         // Validación similar a la función guardar
         $validate = $request->validate([
             'descripcion' => ['required', 'string'],
@@ -120,7 +133,7 @@ class ProductController extends Controller
             'ieps_id.required' => 'El IEPS es obligatorio.',
             'stock.required' => 'El stock es obligatorio.',
         ]);
-    
+
         // Actualizar valores del formulario en el modelo
         $producto->descripcion = $request->input('descripcion');
         $producto->grammage_id = $request->input('grammage_id');
@@ -131,26 +144,26 @@ class ProductController extends Controller
         $producto->ieps_id = $request->input('ieps_id');
         $producto->stock = $request->input('stock');
         // También puedes asignar los campos restantes aquí
-    
+
         // Guardar los cambios en el modelo
         try {
             $producto->save();
-            return redirect()->route('admin.products')->with('success', 'Producto actualizado exitosamente.');
+            return redirect()->route('admin.products')->with('status', 'Producto actualizado exitosamente.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Hubo un error al actualizar el producto: ' . $e->getMessage());
         }
     }
-    
 
 
 
-    public function eliminar ($id){
+
+    public function eliminar($id)
+    {
         $prodcuto = Product::findOrFail($id);
 
         // Eliminar el hospital
         $prodcuto->delete();
-    
-        return redirect()->route('admin.products')->with('status', 'Producto eliminado correctamente');
 
+        return redirect()->route('admin.products')->with('status', 'Producto eliminado correctamente');
     }
 }

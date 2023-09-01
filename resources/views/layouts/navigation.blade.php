@@ -39,12 +39,7 @@
                     </x-nav-link>
 
                     @can('admin.hospitals')
-                        <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(
-                            request()
-                                ->route()
-                                ->getName(),
-                            'admin.hospitals',
-                        )">
+                        <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(request()->route()->getName(),'admin.hospitals',)">
                             {{ __('Hospitales') }}
                         </x-nav-link>
                     @endcan
@@ -56,6 +51,14 @@
                     )">
                         {{ __('Productos') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.catalogs')" :active="Str::startsWith(
+                        request()
+                            ->route()
+                            ->getName(),
+                        'admin.catalogs',
+                    )">
+                        {{ __('Catalogos') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.orders')" :active="Str::startsWith(
                         request()
                             ->route()
@@ -63,18 +66,6 @@
                         'admin.orders',
                     )">
                         {{ __('Pedidos') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('cart.viewCart')" :active="Str::startsWith(
-                        request()
-                            ->route()
-                            ->getName(),
-                        'cart.viewCart',
-                    )">
-                        <div class="nav-link-with-cart">
-                            <i class="fas fa-shopping-cart"></i> <!-- Ícono de carrito -->
-                            {{ __('carrito') }}
-                            <span class="cart-count">{{ count(session('cart', [])) }}</span> <!-- Cantidad de productos en el carrito -->
-                        </div>
                     </x-nav-link>
                 </div>
             </div>

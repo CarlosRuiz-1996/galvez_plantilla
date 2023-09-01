@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('iep', function (Blueprint $table) {
             $table->id();
-            $table->string('amount');//monto
-            $table->integer('status');
+            $table->string('name');//monto
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
