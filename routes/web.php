@@ -54,7 +54,13 @@ Route::middleware('auth')->group(function () {
    Route::get('admin/catalogs/reactivar/{ctg?}/{id?}', [CatalogController::class, 'reactivar'])->name('admin.catalogs.reactivar');
 
     //carrito
-    Route::get('carrito/', [CarritoContoller::class, 'index'])->name('carrito.carrito');
+    Route::get('carrito/', [CarritoContoller::class, 'index2'])->name('carrito.carrito');
+    // routes/web.php
+
+Route::post('carrito/add-to-cart/{product}', [CarritoContoller::class, 'addToCart'])->name('cart.add');
+Route::get('carrito/cart', [CarritoContoller::class, 'viewCart'])->name('cart.viewCart');
+Route::post('carrito/update', [CarritoContoller::class, 'updateCart'])->name('cart.update');
+
    
 
 });

@@ -1,4 +1,26 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+    <style>
+        .nav-link-with-cart {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+    
+        .nav-link-with-cart i.fas.fa-shopping-cart {
+            margin: 5px; /* Espacio entre el ícono y el texto */
+        }
+    
+        .nav-link-with-cart .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -12px;
+            background-color: #f00; /* Cambia el color según tus preferencias */
+            color: #fff;
+            border-radius: 40%;
+            padding: 2px 2px;
+            font-size: 12px;
+        }
+    </style>
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -53,9 +75,16 @@
                         {{ __('Catalogos') }}
                     </x-nav-link>
                     @endcan
+                    <x-nav-link :href="route('admin.orders')" :active="Str::startsWith(
+                        request()
+                            ->route()
+                            ->getName(),
+                        'admin.orders',
+                    )">
+                        {{ __('Pedidos') }}
+                    </x-nav-link>
                 </div>
             </div>
-
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">

@@ -22,12 +22,11 @@
                             <p>Presentation ID: {{ $producto->presentation->name }}</p>
                             <p>Brand ID: {{ $producto->brand->name }}</p>
                             <p>Precio: {{ $producto->price }}</p>
-                            <div class="mt-2">
-                                <label for="cantidad" class="block font-medium text-gray-700">Cantidad:</label>
-                                <input type="number" id="cantidad" name="cantidad" class="form-input mt-1 w-full">
-                            </div>
-                            <button type="submit" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Agregar</button>
-  
+                            <form action="{{ route('cart.add', $producto->id) }}" method="POST">
+                                @csrf
+                                <input type="number" name="quantity" value="1" min="1">
+                                <button type="submit">Agregar a carrito</button>
+                            </form>
                         </div>
                     @endforeach
                 </div>
