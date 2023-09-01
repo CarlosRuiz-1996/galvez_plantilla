@@ -75,13 +75,13 @@
                         {{ __('Catalogos') }}
                     </x-nav-link>
                     @endcan
-                    <x-nav-link :href="route('admin.orders')" :active="Str::startsWith(
+                    <x-nav-link :href="route('carrito.carrito')" :active="Str::startsWith(
                         request()
                             ->route()
                             ->getName(),
-                        'admin.orders',
+                        'carrito.carrito',
                     )">
-                        {{ __('Pedidos') }}
+                        {{ __('Carrito') }}
                     </x-nav-link>
                 </div>
             </div>
