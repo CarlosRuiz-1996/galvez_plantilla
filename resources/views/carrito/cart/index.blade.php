@@ -12,6 +12,7 @@
                 <form action="{{ route('cart.update') }}" method="POST">
                     @csrf
                     @foreach ($cart as $productId => $product)
+
                         <div class="cart-item">
                             <h2>{{ $product->descripcion }}</h2>
                             <p>precio: ${{ $product->price }}</p>
