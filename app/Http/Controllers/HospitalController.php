@@ -47,36 +47,36 @@ class HospitalController extends Controller
        
         //validacion del form
         $validate = $this->validate($request, [
-            'nombre' => ['required', 'string', 'max:255'],
-            'direccion' => ['required', 'string'],
-            'telefono' => ['required', 'string', 'max:255'],
-            'correo' => ['required', 'string', 'max:255'],
-            'contacto' => ['required', 'string', 'max:255'],
-            'contacto_telefono' => ['required', 'string', 'max:255'],
-            'contacto_correo' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string'],
+            'phone' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'contact_phone' => ['required', 'string', 'max:255'],
+            'contact_email' => ['required', 'string', 'max:255'],
         ]);
 
         
       
         
         //recoger valores del form
-        $nombre = $request->input('nombre');
-        $direccion = $request->input('direccion');
-        $telefono = $request->input('telefono');
-        $correo = $request->input('correo');
-        $contacto_nombre = $request->input('contacto');
-        $contacto_telefono = $request->input('contacto_telefono');
-        $contacto_correo = $request->input('contacto_correo');
+        $nombre = $request->input('name');
+        $direccion = $request->input('address');
+        $telefono = $request->input('phone');
+        $correo = $request->input('email');
+        $contacto_nombre = $request->input('contact_name');
+        $contacto_telefono = $request->input('contact_phone');
+        $contacto_correo = $request->input('contact_email');
 
         // $hospital = new Hospital();
 
-        $hospital->nombre= $nombre;
-        $hospital->direccion= $direccion;
-        $hospital->telefono= $telefono;
-        $hospital->correo= $correo;
-        $hospital->contacto_nombre= $contacto_nombre;
-        $hospital->contacto_telefono= $contacto_telefono;
-        $hospital->contacto_correo= $contacto_correo;
+        $hospital->name= $nombre;
+        $hospital->address= $direccion;
+        $hospital->phone= $telefono;
+        $hospital->phone= $correo;
+        $hospital->contact_name= $contacto_nombre;
+        $hospital->contact_phone= $contacto_telefono;
+        $hospital->contact_email= $contacto_correo;
         //subir img
         // $image_path = $request->file('image_path');
         // var_dump($hospital);

@@ -11,15 +11,14 @@
                 <h3 class="text-lg font-semibold mb-4">Productos en el carrito</h3>
                 <form action="{{ route('cart.update') }}" method="POST">
                     @csrf
-                    @foreach ($cart as $productId => $product)
-
+                    @foreach ($cart as $productId => $productData)
                         <div class="cart-item">
-                            <h2>{{ $product->descripcion }}</h2>
-                            <p>precio: ${{ $product->price }}</p>
+                            <h2>{{ $productData['product']['descripcion'] }}</h2>
+                            <p>Precio: ${{ $productData['product']['price'] }}</p>
                             <div class="mt-2">
-                                <label for="quantity{{ $productId }}" class="block font-medium text-gray-700">Cantidad:</label>
-                                <input type="number" id="quantity_{{ $productId }}" name="quantity[{{ $productId }}]"
-                                class="form-input mt-1 w-full" value="{{ $product['quantity'] }}" required>
+                                <label for="quantity_{{ $productId }}" class="block font-medium text-gray-700">Cantidad:</label>
+                                <input type="number" id="quantity_{{ $productId }}" name="quantities[{{ $productId }}]"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white" value="{{ $productData['quantity'] }}" required>
                             </div>
                         </div>
                     @endforeach
