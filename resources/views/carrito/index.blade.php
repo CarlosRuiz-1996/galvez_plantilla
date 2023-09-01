@@ -28,9 +28,18 @@
                                 class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
 
                                 type="number" name="quantity" value="1" min="1">
+                                @if(!auth()->user()->hospitals->isEmpty())
                                 <button 
                                 class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
                                 type="submit">Agregar a producto</button>
+                                    
+                                @else
+                                
+                                <div class="mt-3 p-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                    <span class="font-medium">Alerta!</span> Indica a que hospital perteneces para poder hacer compras.
+                                  </div>
+                                @endif
+                               
                             </form>
                         </div>
                     @endforeach

@@ -5,16 +5,18 @@
             display: flex;
             align-items: center;
         }
-    
+
         .nav-link-with-cart i.fas.fa-shopping-cart {
-            margin: 5px; /* Espacio entre el ícono y el texto */
+            margin: 5px;
+            /* Espacio entre el ícono y el texto */
         }
-    
+
         .nav-link-with-cart .cart-count {
             position: absolute;
             top: -10px;
             right: -12px;
-            background-color: #f00; /* Cambia el color según tus preferencias */
+            background-color: #f00;
+            /* Cambia el color según tus preferencias */
             color: #fff;
             border-radius: 40%;
             padding: 2px 2px;
@@ -37,61 +39,72 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Inicio') }}
                     </x-nav-link>
-                    {{-- @can('admin') --}}
-                    {{-- @can('admin.hospitals') --}}
-                        <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(request()->route()->getName(),'admin.hospitals',)">
+                    @if (Auth::user()->hasRole('Admin'))
+                        <x-nav-link :href="route('admin.hospitals')" :active="Str::startsWith(
+                            request()
+                                ->route()
+                                ->getName(),
+                            'admin.hospitals',
+                        )">
                             {{ __('Hospitales') }}
                         </x-nav-link>
-                    {{-- @endcan --}}
-                    
 
-                    <x-nav-link :href="route('admin.products')" :active="Str::startsWith(
-                        request()
-                            ->route()
-                            ->getName(),
-                        'admin.products',
-                    )">
-                        {{ __('Productos') }}
-                    </x-nav-link>
-               
-                    <x-nav-link :href="route('admin.orders')" :active="Str::startsWith(
-                        request()
-                            ->route()
-                            ->getName(),
-                        'admin.orders',
-                    )">
-                        {{ __('Reportes') }}
-                    </x-nav-link>
-                    
-                    <x-nav-link :href="route('admin.catalogs')" :active="Str::startsWith(
-                        request()
-                            ->route()
-                            ->getName(),
-                        'admin.catalogs',
-                    )">
-                        {{ __('Catalogos') }}
-                    </x-nav-link>
-                    {{-- @endcan --}}
-                    <x-nav-link :href="route('carrito.carrito')" :active="Str::startsWith(
-                        request()
-                            ->route()
-                            ->getName(),
-                        'carrito.carrito',
-                    )">
-                        {{ __('Agregar Producto') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('cart.viewCart')" :active="Str::startsWith(
-                request()
-                    ->route()
-                    ->getName(),
-                'cart.viewCart',
-            )">
-                <div class="nav-link-with-cart">
-                    <i class="fas fa-shopping-cart"></i> <!-- Ícono de carrito -->
-                    {{ __('Pedidos') }}
-                    <span class="cart-count">{{ count(session('cart', [])) }}</span> <!-- Cantidad de productos en el carrito -->
-                </div>
-            </x-nav-link>
+
+
+                        <x-nav-link :href="route('admin.products')" :active="Str::startsWith(
+                            request()
+                                ->route()
+                                ->getName(),
+                            'admin.products',
+                        )">
+                            {{ __('Productos') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.orders')" :active="Str::startsWith(
+                            request()
+                                ->route()
+                                ->getName(),
+                            'admin.orders',
+                        )">
+                            {{ __('Reportes') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.catalogs')" :active="Str::startsWith(
+                            request()
+                                ->route()
+                                ->getName(),
+                            'admin.catalogs',
+                        )">
+                            {{ __('Catalogos') }}
+                        </x-nav-link>
+                    @endif
+                    @if (!Auth::user()->hasRole('Admin'))
+                        <x-nav-link :href="route('carrito.carrito')" :active="Str::startsWith(
+                            request()
+                                ->route()
+                                ->getName(),
+                            'carrito.carrito',
+                        )">
+                            {{ __('Agregar Producto') }}
+                        </x-nav-link>
+
+                        @if (!auth()->user()->hospitals->isEmpty())
+
+                        <x-nav-link :href="route('cart.viewCart')" :active="Str::startsWith(
+                            request()
+                                ->route()
+                                ->getName(),
+                            'cart.viewCart',
+                        )">
+                            <div class="nav-link-with-cart">
+                                <i class="fas fa-shopping-cart"></i> <!-- Ícono de carrito -->
+                                {{ __('Pedidos') }}
+                                <span class="cart-count">{{ count(session('cart', [])) }}</span>
+                                <!-- Cantidad de productos en el carrito -->
+                            </div>
+                        </x-nav-link>
+                        @endif
+                    @endif
                 </div>
             </div>
             <!-- Settings Dropdown -->

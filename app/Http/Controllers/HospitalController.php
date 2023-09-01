@@ -18,6 +18,12 @@ class HospitalController extends Controller
     //
     public function index()
     {
+
+//             $user = \App\Models\User::where('email', 'test@test.com')->first();
+//         $roles = $user->getRoleNames();
+//         dd($roles);
+        
+// die;
         $hospitales = Hospital::orderBy('id', 'desc')->paginate(9);
         // var_dump($images);
         return view('admin.hospitals.index', ['hospitales' => $hospitales]);
