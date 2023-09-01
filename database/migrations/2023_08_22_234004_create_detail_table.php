@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('detail', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
@@ -21,6 +23,7 @@ return new class extends Migration
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

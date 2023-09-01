@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('iep', function (Blueprint $table) {
             $table->id();
             $table->string('name');//monto
             $table->integer('status')->default(1);
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
+
     }
 
     /**

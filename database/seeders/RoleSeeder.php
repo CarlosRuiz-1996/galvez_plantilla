@@ -42,7 +42,8 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.orders'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.orders.detalle'])->syncRoles([$role1]);
         Permission::create(['name' => 'admin.orders.liberar'])->syncRoles([$role1]);
-      
+        //admin.catalogos
+        Permission::create(['name' => 'admin.catalogs'])->syncRoles([$role1]);
 
     }
 }
