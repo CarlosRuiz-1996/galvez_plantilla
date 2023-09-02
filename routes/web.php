@@ -40,8 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/products/editar/{id?}', [ProductController::class, 'editar'])->name('admin.products.editar');
     Route::delete('admin/products/eliminar/{id?}', [ProductController::class, 'eliminar'])->name('admin.products.eliminar');
     Route::post('admin/products/update', [ProductController::class, 'update'])->name('admin.products.update');
-
-
+    Route::post('admin/products/buscar-categoria', [ProductController::class, 'buscarCategoria'])->name('productos.buscar-categoria');
     //pedidos
     Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('/admin/orders/{pedido}/detalle', [OrderController::class, 'detalle'])->name('admin.orders.detalle');

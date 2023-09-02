@@ -31,6 +31,20 @@
                                 value="{{ $producto->descripcion ?? '' }}">
                             <x-input-error :messages="$errors->get('descripcion')" class="mt-2" />
                         </div>
+                        <div>
+                            <label for="categoria"
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoría</label>
+                            <select name="categoria" id="categoria"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                                <option value="" disabled {{ isset($producto) ? '':'selected'}}>Select a category</option>
+                                @foreach ($categorias as $categoria)
+                                <option value="{{ $categoria->id }}"
+                                    {{ isset($producto) && $producto->categoria_id == $categoria->id ? 'selected' : '' }}>
+                                    {{ $categoria->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>                      
 
                         <div>
                             <label for="grammage_id"
@@ -168,4 +182,55 @@
             document.getElementById('total').value = total.toFixed(2);
         }
     </script>
+<script>
+    $(document).ready(function() {
+        // Función para buscar la categoría
+        function buscarCategoria() {
+            var descripcion = document.getElementById('descripcion').value;
+            alert(descripcion);
+            // Verificar si el campo de descripción ya tiene valor del controlador    
+            // Realiza una solicitud AJAX para buscar la categoría
+            $.ajax({
+                type: 'POST',
+                url: '{{ route('productos.buscar-categoria') }}',
+                data: {
+                    '_token': '{{ csrf_token() }}',
+                    'descripcion': descripcion
+                },
+                success: function(data) {
+                    var categoriaNombre = data.categoria.name;
+console.log(data);
+                    // Elimina la selección de la opción predeterminada
+                    // Muestra el contenido de todas las opciones en el select
+                    $('#categoria option').each(function() {
+                    });
+
+                    // Verifica si la opción con el valor de categoriaNombre existe en el select
+                    var option = $('#categoria option').filter(function() {
+                        return $(this).val() == data.categoria.id
+                    });
+
+                    if (option.length > 0) {
+                        option.prop('selected', true);
+                    }
+                }
+            });
+        }
+    
+        // Escucha el evento keyup en el campo de descripción
+        var timeoutId;
+
+            $('#descripcion').on('keyup', function() {
+                clearTimeout(timeoutId); // Cancelar el temporizador si existe
+
+                // Configurar un temporizador para ejecutar buscarCategoria() después de 500 ms
+                timeoutId = setTimeout(function() {
+                    buscarCategoria();
+                }, 1000); // Puedes ajustar el tiempo según tus necesidades
+            });
+    
+        // Llama a buscarCategoria al cargar la página si el campo de descripción ya tiene valor
+    });
+</script>
+
 </x-app-layout>
