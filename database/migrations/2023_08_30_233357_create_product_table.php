@@ -24,8 +24,9 @@ return new class extends Migration
             $table->unsignedBigInteger('ieps_id');
             $table->float('total');
             $table->integer('stock');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
-
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('grammage_id')->references('id')->on('grammages')->onDelete('cascade');
             $table->foreign('presentation_id')->references('id')->on('presentations')->onDelete('cascade');
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');

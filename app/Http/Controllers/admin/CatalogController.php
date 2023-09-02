@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\Categories;
 use App\Models\Grammage;
 use App\Models\Ieps;
 use App\Models\Iva;
@@ -53,6 +54,10 @@ class CatalogController extends Controller
             $catalogo = new Ieps();
             $ctg = 5;
         }
+        else if ($ctg == "Categoria") {
+            $catalogo = new Categories();
+            $ctg = 6;
+        }
 
         //asignar nuevos valores al objeto catalogo
         $catalogo->name = $name;
@@ -83,6 +88,9 @@ class CatalogController extends Controller
         } else if ($ctg == 5) {
             $catalogo = "IEPS";
             $listado = Ieps::orderBy('id', 'desc')->paginate(10);
+        }else if ($ctg == 6) {
+            $catalogo = "Categoria";
+            $listado = Categories::orderBy('id', 'desc')->paginate(10);
         } else {
             return view('admin.catalogs');
         }
@@ -112,6 +120,9 @@ class CatalogController extends Controller
         } else if ($ctg == "IEPS") {
             $catalogo = "IEPS";
             $listado = Ieps::findOrFail($id);
+        }else if ($ctg == "Categoria") {
+            $catalogo = "Categoria";
+            $listado = Categories::findOrFail($id);
         } else {
             return view('admin.catalogs.show');
         }
@@ -147,7 +158,11 @@ class CatalogController extends Controller
         } else if ($ctg == "IEPS") {
             $catalogo = Ieps::findOrFail($id);
             $ctg = 5;
+        }else if ($ctg == "Categoria") {
+            $catalogo = Categories::findOrFail($id);
+            $ctg = 6;
         }
+        
 
         //asignar nuevos valores al objeto catalogo
         $catalogo->name = $name;
@@ -179,6 +194,9 @@ class CatalogController extends Controller
         } else if ($ctg == "IEPS") {
             $catalogo = Ieps::findOrFail($id);
             $ctg = 5;
+        }else if ($ctg == "Categoria") {
+            $catalogo = Categories::findOrFail($id);
+            $ctg = 6;
         }
 
         // Eliminar el hospital
@@ -206,6 +224,9 @@ class CatalogController extends Controller
         } else if ($ctg == "IEPS") {
             $catalogo = Ieps::findOrFail($id);
             $ctg = 5;
+        } else if ($ctg == "Categoria") {
+            $catalogo = Categories::findOrFail($id);
+            $ctg = 6;
         }
 
         // Eliminar el hospital

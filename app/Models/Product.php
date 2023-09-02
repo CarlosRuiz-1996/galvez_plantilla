@@ -14,6 +14,7 @@ class Product extends Model
         'grammage_id',
         'presentation_id',
         'brand_id',
+        'category_id',
         'price',
         'iva_id',
         'ieps_id',
@@ -24,6 +25,10 @@ class Product extends Model
     public function grammage()
         {
             return $this->belongsTo(Grammage::class);
+        }
+        public function Categories()
+        {
+            return $this->belongsTo(Categories::class);
         }
         public function presentation()
         {

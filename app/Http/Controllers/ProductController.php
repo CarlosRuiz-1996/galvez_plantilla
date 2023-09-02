@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Categories;
 use App\Models\Grammage;
 use App\Models\Ieps;
 use App\Models\Iva;
@@ -31,10 +32,10 @@ class ProductController extends Controller
         $brands = Brand::all();
         $ieps = Ieps::all();
         $iva = Iva::all();
-
+        $categorias = Categories::all();
         $grammages = Grammage::all();
         $presentations = Presentation::all();
-        return view('admin.products.crear', compact('brands', 'ieps', 'iva', 'grammages', 'presentations'));
+        return view('admin.products.crear', compact('brands', 'ieps', 'iva', 'grammages', 'presentations','categorias'));
     }
     public function editar($id)
     {
@@ -44,8 +45,8 @@ class ProductController extends Controller
         $grammages = Grammage::all();
         $presentations = Presentation::all();
         $producto = Product::findOrFail($id);
-
-        return view('admin.products.crear', compact('producto', 'brands', 'ieps', 'iva', 'grammages', 'presentations'));
+        $categorias = Categories::all();
+        return view('admin.products.crear', compact('producto', 'brands', 'ieps', 'iva', 'grammages', 'presentations','categorias'));
     }
 
 
@@ -62,6 +63,7 @@ class ProductController extends Controller
             'ieps_id' => ['required', 'numeric'],
             'total' => ['required', 'numeric'],
             'stock' => ['required', 'numeric'],
+            'categoria' => ['required', 'numeric'],
         ],[
             'descripcion.required' => 'La descripción es obligatoria.',
             'grammage_id.required' => 'El gramage es obligatorio.',
@@ -71,7 +73,7 @@ class ProductController extends Controller
             'iva_id.required' => 'El IVA es obligatorio.',
             'ieps_id.required' => 'El IEPS es obligatorio.',
             'total.required' => 'El total es obligatorio.',
-
+            'categoria.required' => 'El stock es obligatorio.',
             'stock.required' => 'El stock es obligatorio.',
         ]);
         //recoger valores del form
@@ -84,7 +86,7 @@ class ProductController extends Controller
         $ieps_id = $request->input('ieps_id');
         $total = $request->input('total');
         $stock = $request->input('stock');
-
+        $categoria = $request->input('categoria');
         //creo nuevo model
         $product = new Product();
 
@@ -99,7 +101,8 @@ class ProductController extends Controller
         $product->ieps_id = intval($ieps_id);
         $product->total = floatval($total);
         $product->stock = intval($stock);
-
+        $product->category_id = intval($categoria);
+        
         // var_dump($product); die;
         $product->save();
         return redirect()->route('admin.products')->with('status', 'Producto guardado exitosamente.');
@@ -123,6 +126,7 @@ class ProductController extends Controller
             'iva_id' => ['required', 'numeric'],
             'ieps_id' => ['required', 'numeric'],
             'stock' => ['required', 'numeric'],
+            'categoria' => ['required', 'numeric'],
         ], [
             'descripcion.required' => 'La descripción es obligatoria.',
             'grammage_id.required' => 'El gramage es obligatorio.',
@@ -132,6 +136,7 @@ class ProductController extends Controller
             'iva_id.required' => 'El IVA es obligatorio.',
             'ieps_id.required' => 'El IEPS es obligatorio.',
             'stock.required' => 'El stock es obligatorio.',
+            'categoria.required' => 'El stock es obligatorio.',
         ]);
 
         // Actualizar valores del formulario en el modelo
@@ -143,6 +148,7 @@ class ProductController extends Controller
         $producto->iva_id = $request->input('iva_id');
         $producto->ieps_id = $request->input('ieps_id');
         $producto->stock = $request->input('stock');
+        $producto->category_id = intval('categoria');
         // También puedes asignar los campos restantes aquí
 
         // Guardar los cambios en el modelo
@@ -166,4 +172,23 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products')->with('status', 'Producto eliminado correctamente');
     }
+    public function buscarCategoria(Request $request)
+{
+    $descripcion = $request->input('descripcion');
+    $categoria = 'Sin categoría';
+
+    // Realiza una consulta a la base de datos para buscar categorías que coincidan con las palabras clave
+    $categorias = Categories::where(function ($query) use ($descripcion) {
+        $palabras = explode(' ', $descripcion);
+        foreach ($palabras as $palabra) {
+            $query->orWhere('palabra_clave', 'like', '%' . $palabra . '%');
+        }
+    })->first();
+
+    if ($categorias) {
+        $categoria = $categorias;
+    }
+
+    return response()->json(['categoria' => $categoria]);
+}
 }

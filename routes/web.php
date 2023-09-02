@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/products/editar/{id?}', [ProductController::class, 'editar'])->name('admin.products.editar');
     Route::delete('admin/products/eliminar/{id?}', [ProductController::class, 'eliminar'])->name('admin.products.eliminar');
     Route::post('admin/products/update', [ProductController::class, 'update'])->name('admin.products.update');
-
+    Route::post('admin/products/buscar-categoria',  [ProductController::class, 'buscarCategoria'])->name('productos.buscar-categoria');
 
     //pedidos
     Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
@@ -60,6 +60,8 @@ Route::middleware('auth')->group(function () {
 Route::post('carrito/add-to-cart/{product}', [CarritoContoller::class, 'addToCart'])->name('cart.add');
 Route::get('carrito/cart', [CarritoContoller::class, 'viewCart'])->name('cart.viewCart');
 Route::post('carrito/update', [CarritoContoller::class, 'updateCart'])->name('cart.update');
+
+
 
    
 
