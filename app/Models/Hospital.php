@@ -11,14 +11,22 @@ class Hospital extends Model
     protected $table = 'hospitals';
 
     // relacion One to Many
-    public function pedidos(){
+    public function pedidos()
+    {
         // llamo a otro modelo
         return $this->hasMany('App\Models\Order');
     }
 
     public function hospital()
-{
-    return $this->belongsTo(Hospital::class);
-}
+    {
+        return $this->belongsTo(Hospital::class);
+    }
 
+    public function users() {
+        return $this->hasMany(User::class);
+    }
+    
+    public function user() {
+        return $this->belongsToMany(User::class, 'user_hospital');
+    }
 }

@@ -10,7 +10,7 @@
             <br>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                    <form action="{{ route('hospital.update') }}" method="POST">
+                    <form action="{{ route('admin.hospitals.update') }}" method="POST">
                         @csrf
 
 
@@ -19,64 +19,64 @@
                             <input type="hidden" name="id" id="id" value="{{ $hospital->id }}" />
 
                             <div>
-                                <label for="nombre"
+                                <label for="name"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre</label>
-                                <input type="text" name="nombre" id="nombre" value="{{ $hospital->nombre }}"
+                                <input type="text" name="name" id="name" value="{{ $hospital->name }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <x-input-error :messages="$errors->get('nombre')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
 
                             </div>
                             <div>
-                                <label for="direccion"
+                                <label for="address"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Dirección</label>
-                                <textarea name="direccion" id="direccion" rows="3"
-                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ $hospital->direccion }}</textarea>
-                                <x-input-error :messages="$errors->get('direccion')" class="mt-2" />
+                                <textarea name="address" id="address" rows="3"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">{{ $hospital->address }}</textarea>
+                                <x-input-error :messages="$errors->get('address')" class="mt-2" />
                             </div>
                             <div>
                                 <label for="telefono"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Teléfono del
                                     hospital</label>
-                                <input type="text" name="telefono" id="telefono" value="{{ $hospital->telefono }}"
+                                <input type="text" name="phone" id="phone" value="{{ $hospital->phone }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                             </div>
                             <div>
                                 <label for="correo"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Correo del
                                     hospital</label>
-                                <input type="text" name="correo" id="correo" value="{{ $hospital->correo }}"
+                                <input type="text" name="email" id="email" value="{{ $hospital->email }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <x-input-error :messages="$errors->get('correo')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
                             <div>
-                                <label for="contacto"
+                                <label for="contact_name"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contacto</label>
-                                <input type="text" name="contacto" id="contacto"
-                                    value="{{ $hospital->contacto_nombre }}"
+                                <input type="text" name="contact_name" id="contact_name"
+                                    value="{{ $hospital->contact_name }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <x-input-error :messages="$errors->get('contacto')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('contact_name')" class="mt-2" />
                             </div>
 
                             <div>
-                                <label for="contacto_telefono"
+                                <label for="contact_phone"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Teléfono del
                                     contacto</label>
-                                <input type="text" name="contacto_telefono" id="contacto_telefono"
-                                    value="{{ $hospital->contacto_telefono }}"
+                                <input type="text" name="contact_phone" id="contact_phone"
+                                    value="{{ $hospital->contact_phone }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <x-input-error :messages="$errors->get('contacto_telefono')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('contact_phone')" class="mt-2" />
                             </div>
 
 
                             <div>
-                                <label for="contacto_correo"
+                                <label for="contact_email"
                                     class="block text-sm font-medium text-gray-700 dark:text-gray-300">Correo del
                                     contacto</label>
-                                <input type="text" name="contacto_correo" id="contacto_correo"
-                                    value="{{ $hospital->contacto_correo }}"
+                                <input type="text" name="contact_email" id="contact_email"
+                                    value="{{ $hospital->contact_email }}"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <x-input-error :messages="$errors->get('contacto_correo')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('contact_email')" class="mt-2" />
                             </div>
                             <!-- Agrega más campos aquí -->
 
@@ -86,7 +86,7 @@
                                     Guardar Cambios
                                 </button>
 
-                                <a href="{{route('hospital.detalle',  $hospital->id)}}" type="button"
+                                <a href="{{route('admin.hospitals.detalle',  $hospital->id)}}" type="button"
                                     class="inline-flex items-center px-4 py-2 bg-red-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-600 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 dark:bg-gray-600 dark:border-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                     Cancelar
                             </a>

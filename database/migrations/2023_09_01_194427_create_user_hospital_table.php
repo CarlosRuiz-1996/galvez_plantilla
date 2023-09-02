@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        //marcas
-        Schema::create('brands', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->integer('status')->default(1);
+        Schema::create('user_hospital', function (Blueprint $table) {
+            $table->unsignedBigInteger('hospital_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
         Schema::enableForeignKeyConstraints();
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('brands');
+        Schema::dropIfExists('user_hospital');
     }
 };

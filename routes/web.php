@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/hospitals/editar/{id?}', [HospitalController::class, 'editar'])->name('admin.hospitals.editar');
     Route::delete('admin/hospitals/eliminar/{id?}', [HospitalController::class, 'eliminar'])->name('admin.hospitals.eliminar');
     Route::put('admin/hospitals/update', [HospitalController::class, 'update'])->name('admin.hospitals.update');
+    
+    Route::get('hospitals/asignar', [HospitalController::class, 'list'])->name('hospitals.asignar');
+    Route::post('hospitals/asignar/save', [HospitalController::class, 'asignar'])->name('hospitals.asignar.save');
 
     //prodcutos
     Route::get('admin/products', [ProductController::class, 'index'])->name('admin.products');
@@ -43,18 +46,19 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('/admin/orders/{pedido}/detalle', [OrderController::class, 'detalle'])->name('admin.orders.detalle');
     Route::put('admin/orders/liberar', [OrderController::class, 'liberar'])->name('admin.orders.liberar');
-   //catalogos
-   Route::get('admin/catalogs', [CatalogController::class, 'index'])->name('admin.catalogs');
-   Route::get('admin/catalogs/show/{ctg?}', [CatalogController::class, 'show'])->name('admin.catalogs.show');
-   Route::get('admin/catalogs/crear/{ctg?}', [CatalogController::class, 'create'])->name('admin.catalogs.crear');
-   Route::get('admin/catalogs/edit/{ctg?}/{id?}', [CatalogController::class, 'edit'])->name('admin.catalogs.edit');
-   Route::post('admin/catalogs/guardar/{ctg?}', [CatalogController::class, 'store'])->name('admin.catalogs.guardar');
-   Route::post('admin/catalogs/update/{ctg?}', [CatalogController::class, 'update'])->name('admin.catalogs.update');
-   Route::get('admin/catalogs/destroy/{ctg?}/{id?}', [CatalogController::class, 'destroy'])->name('admin.catalogs.destroy');
-   Route::get('admin/catalogs/reactivar/{ctg?}/{id?}', [CatalogController::class, 'reactivar'])->name('admin.catalogs.reactivar');
+    //catalogos
+    Route::get('admin/catalogs', [CatalogController::class, 'index'])->name('admin.catalogs');
+    Route::get('admin/catalogs/show/{ctg?}', [CatalogController::class, 'show'])->name('admin.catalogs.show');
+    Route::get('admin/catalogs/crear/{ctg?}', [CatalogController::class, 'create'])->name('admin.catalogs.crear');
+    Route::get('admin/catalogs/edit/{ctg?}/{id?}', [CatalogController::class, 'edit'])->name('admin.catalogs.edit');
+    Route::post('admin/catalogs/guardar/{ctg?}', [CatalogController::class, 'store'])->name('admin.catalogs.guardar');
+    Route::post('admin/catalogs/update/{ctg?}', [CatalogController::class, 'update'])->name('admin.catalogs.update');
+    Route::get('admin/catalogs/destroy/{ctg?}/{id?}', [CatalogController::class, 'destroy'])->name('admin.catalogs.destroy');
+    Route::get('admin/catalogs/reactivar/{ctg?}/{id?}', [CatalogController::class, 'reactivar'])->name('admin.catalogs.reactivar');
 
     //carrito
     Route::get('carrito/', [CarritoContoller::class, 'index2'])->name('carrito.carrito');
+<<<<<<< HEAD
     // routes/web.php
 
 Route::post('carrito/add-to-cart/{product}', [CarritoContoller::class, 'addToCart'])->name('cart.add');
@@ -64,7 +68,14 @@ Route::post('carrito/update', [CarritoContoller::class, 'updateCart'])->name('ca
 
 
    
+=======
+    Route::post('carrito/add-to-cart/{product}', [CarritoContoller::class, 'addToCart'])->name('cart.add');
+    Route::get('carrito/cart', [CarritoContoller::class, 'viewCart'])->name('cart.viewCart');
+    Route::get('carrito/update/{id?}/{accion?}', [CarritoContoller::class, 'updateCart'])->name('cart.update');
+    Route::get('carrito/removeProduct/{productId?}', [CarritoContoller::class, 'removeProduct'])->name('cart.removeProduct');
+    Route::post('carrito/generar-pedido', [CarritoContoller::class, 'generarPedido'])->name('cart.generarPedido');
+>>>>>>> c804294e9bdc73fa534a4599a72a17e82d4305c7
 
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

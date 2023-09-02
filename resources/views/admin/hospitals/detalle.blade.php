@@ -39,20 +39,20 @@
                                 </p> --}}
                                 <div class="mt-4 space-y-3">
                                     <p class="text-lg text-gray-600 dark:text-gray-400">Nombre: <span
-                                            class="font-semibold">{{ $hospital->nombre }}</span></p>
+                                            class="font-semibold">{{ $hospital->name }}</span></p>
                                     <p class="text-lg text-gray-600 dark:text-gray-400">Dirección: <span
-                                            class="font-semibold">{{ $hospital->direccion }}</span></p>
+                                            class="font-semibold">{{ $hospital->address }}</span></p>
                                     <p class="text-lg text-gray-600 dark:text-gray-400">Teléfono: <span
-                                            class="font-semibold">{{ $hospital->telefono }}</span></p>
+                                            class="font-semibold">{{ $hospital->phone }}</span></p>
                                     <p class="text-lg text-gray-600 dark:text-gray-400">Correo: <span
-                                            class="font-semibold">{{ $hospital->correo }}</span></p>
+                                            class="font-semibold">{{ $hospital->email }}</span></p>
                                     <p class="text-lg text-gray-600 dark:text-gray-400">Contacto: <span
-                                            class="font-semibold">{{ $hospital->contacto_nombre }}</span></p>
+                                            class="font-semibold">{{ $hospital->contact_name }}</span></p>
                                 </div>
                                 <div class="mt-6 flex justify-end space-x-4">
-                                    <a href="{{ route('hospital.editar', $hospital->id) }}"
+                                    <a href="{{ route('admin.hospitals.editar', $hospital->id) }}"
                                         class="text-blue-600 hover:underline">Editar</a>
-                                    <form action="{{ route('hospital.eliminar', $hospital->id) }}" method="POST">
+                                    <form action="{{ route('admin.hospitals.eliminar', $hospital->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600 hover:underline">Eliminar</button>

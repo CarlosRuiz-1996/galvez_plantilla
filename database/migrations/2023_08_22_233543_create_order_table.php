@@ -22,7 +22,7 @@ return new class extends Migration
             $table->float('total');
             $table->timestamps();
             // Definir las claves foráneas
-            $table->foreign('hospital_id')->references('id')->on('hospitales')->onDelete('cascade');
+            $table->foreign('hospital_id')->references('id')->on('hospitals')->onDelete('cascade');
         });
 
         Schema::enableForeignKeyConstraints();

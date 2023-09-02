@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
+
         Schema::create('grammages', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
+
     }
 
     /**

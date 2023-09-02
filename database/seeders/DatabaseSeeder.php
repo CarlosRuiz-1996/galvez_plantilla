@@ -23,10 +23,12 @@ class DatabaseSeeder extends Seeder
         $this->call(IvaSeeder::class);
         $this->call(IpesSeeder::class);
         $this->call(GrammageSeeder::class);
+        $this->call(HospitalesTableSeeder::class);
 
         //creo un usuario de prueba para la base
         \App\Models\User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Test',
+            'surname' => 'User',
             'email' => 'test@test.com',
         ])->assignRole('Admin');
 
