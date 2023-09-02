@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Categories;
 use App\Models\Detail;
+use App\Models\Grammage;
+use App\Models\Hospital;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -13,10 +16,12 @@ class CarritoContoller extends Controller
 {
     public function index2()
     {
+        $marcas = Brand::all();
+        $gramajes = Grammage::all();
         $categorias = Categories::all();
         $productos = Product::orderBy('id', 'desc')->paginate(10);
         // var_dump($productos);
-        return view('carrito.index', compact('productos','categorias'));
+        return view('carrito.index', compact('productos','categorias','gramajes','marcas'));
     }  
 
     public function addToCart(Request $request, $productId)
@@ -69,13 +74,20 @@ class CarritoContoller extends Controller
         session()->forget('cartTotal');
     }
     // Ver el contenido del carrito
-    public function viewCart()
+    public function viewCart(Request $request)
     {
         $cart = session()->get('cart', []);
-
-        return view('carrito.cart.index', compact('cart'));
+        $user = auth()->user();
+        $hospitalId = $user->hospitals[0]->id;
+        $query = Order::orderBy('id', 'desc');
+            $query->where('hospital_id',$hospitalId);
+    
+        if ($request->filled('filter_date')) {
+            $query->whereDate('created_at', $request->input('filter_date'));
+        } 
+        $pedidos = $query->paginate(10);
+        return view('carrito.cart.index', compact('cart','pedidos'));
     }
-
 
     public function updateCart($id, $accion)
     {

@@ -31,6 +31,16 @@
                                 value="{{ $listado->name ?? '' }}">
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
+                        @if ($catalogo == 'Categoria')
+                            <!-- Campo adicional para categorías -->
+                            <div class="mt-6">
+                                <label for="palabra_clave" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Palabras clave</label>
+                                <input type="text" name="palabra_clave" id="palabra_clave"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    value="{{ $listado->palabra_clave ?? '' }}" placeholder="palabras separadas por ',' Ejemplo:manzana,sandia,cirule">
+                                <!-- Puedes ajustar el nombre del campo y su identificador según tus necesidades -->
+                            </div>
+                        @endif
 
                        
 

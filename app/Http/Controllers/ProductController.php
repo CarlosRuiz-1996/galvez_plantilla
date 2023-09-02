@@ -102,8 +102,6 @@ class ProductController extends Controller
         $product->total = floatval($total);
         $product->stock = intval($stock);
         $product->category_id = intval($categoria);
-        
-        // var_dump($product); die;
         $product->save();
         return redirect()->route('admin.products')->with('status', 'Producto guardado exitosamente.');
 
@@ -136,7 +134,7 @@ class ProductController extends Controller
             'iva_id.required' => 'El IVA es obligatorio.',
             'ieps_id.required' => 'El IEPS es obligatorio.',
             'stock.required' => 'El stock es obligatorio.',
-            'categoria.required' => 'El stock es obligatorio.',
+            'categoria.required' => 'La categoria es obligatoria',
         ]);
 
         // Actualizar valores del formulario en el modelo
@@ -148,7 +146,7 @@ class ProductController extends Controller
         $producto->iva_id = $request->input('iva_id');
         $producto->ieps_id = $request->input('ieps_id');
         $producto->stock = $request->input('stock');
-        $producto->category_id = intval('categoria');
+        $producto->category_id = $request->input('categoria');
         // También puedes asignar los campos restantes aquí
 
         // Guardar los cambios en el modelo

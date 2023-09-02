@@ -32,9 +32,18 @@ class CatalogController extends Controller
     public function store(Request $request, $ctg)
     {
 
-        $validate = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-        ]);
+        
+        if($ctg=="Categoria"){
+            $validate = $this->validate($request, [
+                'name' => ['required', 'string', 'max:255'],
+                'palabra_clave' => ['required', 'string', 'max:255'],
+            ]);
+            $palabra_clave = $request->input('palabra_clave');
+        }else{
+            $validate = $this->validate($request, [
+                'name' => ['required', 'string', 'max:255'],
+            ]);
+        }
         $name = $request->input('name');
         $catalogo = "";
         //creo nuevo model
@@ -61,6 +70,9 @@ class CatalogController extends Controller
 
         //asignar nuevos valores al objeto catalogo
         $catalogo->name = $name;
+        if( $ctg == 6){
+         $catalogo->palabra_clave = $palabra_clave;
+        }
         //guardo el nuevo catg
         $catalogo->save();
         return redirect()->route('admin.catalogs.show', $ctg)->with('status', 'Guardado exitosamente.');
@@ -135,9 +147,17 @@ class CatalogController extends Controller
     public function update(Request $request, $ctg)
     {
 
-        $validate = $this->validate($request, [
-            'name' => ['required', 'string', 'max:255'],
-        ]);
+        if($ctg=="Categoria"){
+            $validate = $this->validate($request, [
+                'name' => ['required', 'string', 'max:255'],
+                'palabra_clave' => ['required', 'string', 'max:255'],
+            ]);
+            $palabra_clave = $request->input('palabra_clave');
+        }else{
+            $validate = $this->validate($request, [
+                'name' => ['required', 'string', 'max:255'],
+            ]);
+        }
         $name = $request->input('name');
         $id = $request->input('id');
 
@@ -166,7 +186,9 @@ class CatalogController extends Controller
 
         //asignar nuevos valores al objeto catalogo
         $catalogo->name = $name;
-
+        if( $ctg == 6){
+            $catalogo->palabra_clave = $palabra_clave;
+        }
 
         //guardo el catg actualiado
         $catalogo->update();
