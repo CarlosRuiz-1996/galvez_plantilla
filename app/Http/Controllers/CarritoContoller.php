@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Detail;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CarritoContoller extends Controller
 {
@@ -25,16 +27,21 @@ class CarritoContoller extends Controller
         }
 
         $cart = session()->get('cart', []);
-        // Verifica si ya existe el producto en el carrito
-        if (isset($cart[$productId])) {
-            // Incrementa la cantidad si ya existe
-            $cart[$productId]['quantity'] += $quantity;
+        // Verifica si hay stock
+        if ($quantity <= $product->stock) {
+            // Verifica si ya existe el producto en el carrito
+            if (isset($cart[$productId])) {
+                // Incrementa la cantidad si ya existe
+                $cart[$productId]['quantity'] += $quantity;
+            } else {
+                // Agrega el producto con la cantidad
+                $cart[$productId] = [
+                    'product' => $product,
+                    'quantity' => $quantity,
+                ];
+            }
         } else {
-            // Agrega el producto con la cantidad
-            $cart[$productId] = [
-                'product' => $product,
-                'quantity' => $quantity,
-            ];
+            return redirect()->back()->with('error', 'Stock insuficiente.');
         }
 
 
@@ -51,6 +58,13 @@ class CarritoContoller extends Controller
             session()->put('cartTotal', $total);
         }
     }
+
+    public function dropsession()
+    {
+        // Borra la sesión del carrito
+        session()->forget('cart');
+        session()->forget('cartTotal');
+    }
     // Ver el contenido del carrito
     public function viewCart()
     {
@@ -66,13 +80,21 @@ class CarritoContoller extends Controller
 
         if ($id !== null && $accion !== null) {
             if (isset($cart[$id])) {
-                if ($accion === 'increase') {
-                    $cart[$id]['quantity'] += 1;
-                } elseif ($accion === 'decrease' && $cart[$id]['quantity'] > 1) {
-                    $cart[$id]['quantity'] -= 1;
-                }
+                $product = Product::find($id);
+                if ($product) {
+                    if ($accion === 'increase') {
+                        // Verifica si la cantidad deseada es menor o igual al stock disponible
+                        if ($cart[$id]['quantity'] + 1 <= $product->stock) {
+                            $cart[$id]['quantity'] += 1;
+                        } else {
+                            return redirect()->back()->with('error', 'Stock insuficiente para aumentar la cantidad.');
+                        }
+                    } elseif ($accion === 'decrease' && $cart[$id]['quantity'] > 1) {
+                        $cart[$id]['quantity'] -= 1;
+                    }
 
-                session()->put('cart', $cart);
+                    session()->put('cart', $cart);
+                }
             }
         }
         $this->total($cart);
@@ -104,7 +126,7 @@ class CarritoContoller extends Controller
     }
 
 
-    public function generarPedido(Request $request)
+    public function generarPedido2(Request $request)
     {
         $cart = session()->get('cart', []);
 
@@ -138,5 +160,56 @@ class CarritoContoller extends Controller
 
         // Redirige al usuario a una página de confirmación o a donde desees
         return redirect()->route('cart.viewCart')->with('success', 'Pedido generado exitosamente. ¡Gracias por tu compra!');
+    }
+
+
+    public function generarPedido(Request $request)
+    {
+        // Obtén los datos necesarios para la orden desde el formulario
+        // $total = $request->input('total');
+        $fecha_entrega = $request->input('entrega');
+        $message = $request->input('message');
+
+        // Accede al ID del hospital relacionado con el usuario
+        $user = auth()->user();
+
+        $hospitalId = $user->hospitals[0]->id;
+
+        // Otras columnas de la tabla Orders que necesites
+
+        // Crea la orden
+        $order = new Order();
+        $order->hospital_id = $hospitalId;
+        $order->deadline = $fecha_entrega;
+        $order->observations = $message;
+        $order->status = 1;
+        $order->total = session('cartTotal');
+
+
+
+        $order->save();
+
+        // Obtén los datos del carrito de la sesión
+        $cart = session()->get('cart', []);
+
+        // Guardar los detalles de la orden en la tabla Detail
+        foreach ($cart as $productId => $item) {
+            $detail = new Detail();
+            $detail->order_id = $order->id; // Asocia el detalle con la orden creada anteriormente
+            $detail->product_id = $productId;
+            $detail->amount = $item['quantity'];
+            $detail->save();
+
+            // Actualizar el stock del producto
+            $product = Product::find($productId);
+            if ($product) {
+                $product->stock -= $item['quantity'];
+                $product->update();
+            }
+        }
+
+        $this->dropsession();
+
+        return view('dashboard')->with('status', 'Orden creada exitosamente.');
     }
 }

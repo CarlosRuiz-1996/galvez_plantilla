@@ -12,6 +12,6 @@
         class=" bg-red-100 dark:bg-red-600 border-red-400 dark:border-red-600 text-red-700 dark:text-red-100 px-4 py-3 rounded relative"
         role="alert">
         <strong class="font-bold">¡Error!</strong>
-        <span class="block sm:inline">{{ session('status') }}</span>
+        <span class="block sm:inline">{{ session('error') }}</span>
     </div>
 @endif
