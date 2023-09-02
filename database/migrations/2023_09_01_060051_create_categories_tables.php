@@ -13,9 +13,10 @@ return new class extends Migration
 {
     Schema::create('categories', function (Blueprint $table) {
         $table->id();
-        $table->string('categoria');
+        $table->string('name');
         $table->string('palabra_clave');
         $table->timestamps();
+        $table->boolean(1);
     });
 }
 
