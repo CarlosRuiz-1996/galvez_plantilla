@@ -58,23 +58,11 @@ Route::middleware('auth')->group(function () {
 
     //carrito
     Route::get('carrito/', [CarritoContoller::class, 'index2'])->name('carrito.carrito');
-<<<<<<< HEAD
-    // routes/web.php
-
-Route::post('carrito/add-to-cart/{product}', [CarritoContoller::class, 'addToCart'])->name('cart.add');
-Route::get('carrito/cart', [CarritoContoller::class, 'viewCart'])->name('cart.viewCart');
-Route::post('carrito/update', [CarritoContoller::class, 'updateCart'])->name('cart.update');
-
-
-
-   
-=======
     Route::post('carrito/add-to-cart/{product}', [CarritoContoller::class, 'addToCart'])->name('cart.add');
     Route::get('carrito/cart', [CarritoContoller::class, 'viewCart'])->name('cart.viewCart');
     Route::get('carrito/update/{id?}/{accion?}', [CarritoContoller::class, 'updateCart'])->name('cart.update');
     Route::get('carrito/removeProduct/{productId?}', [CarritoContoller::class, 'removeProduct'])->name('cart.removeProduct');
     Route::post('carrito/generar-pedido', [CarritoContoller::class, 'generarPedido'])->name('cart.generarPedido');
->>>>>>> c804294e9bdc73fa534a4599a72a17e82d4305c7
 
 });
 

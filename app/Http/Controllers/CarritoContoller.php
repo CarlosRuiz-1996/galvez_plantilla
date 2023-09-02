@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<< HEAD
 use App\Models\Categories;
-=======
 use App\Models\Detail;
 use App\Models\Order;
->>>>>>> c804294e9bdc73fa534a4599a72a17e82d4305c7
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,13 +16,9 @@ class CarritoContoller extends Controller
         $categorias = Categories::all();
         $productos = Product::orderBy('id', 'desc')->paginate(10);
         // var_dump($productos);
-<<<<<<< HEAD
         return view('carrito.index', compact('productos','categorias'));
     }  
-=======
-        return view('carrito.index', ['productos' => $productos]);
-    }
->>>>>>> c804294e9bdc73fa534a4599a72a17e82d4305c7
+
     public function addToCart(Request $request, $productId)
     {
         $quantity = $request->input('quantity', 1); // Si no se especifica, la cantidad predeterminada es 1
