@@ -137,7 +137,7 @@
                         <div>
                             <label for="total"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Total</label>
-                            <input type="text" name="total" id="total"
+                            <input type="number" name="total" id="total"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value="{{ $producto->total ?? '' }}" readonly>
                             <x-input-error :messages="$errors->get('total')" class="mt-2" />

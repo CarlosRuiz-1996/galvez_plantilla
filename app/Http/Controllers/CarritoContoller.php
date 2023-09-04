@@ -19,9 +19,11 @@ class CarritoContoller extends Controller
         $marcas = Brand::all();
         $gramajes = Grammage::all();
         $categorias = Categories::all();
-        $productos = Product::orderBy('id', 'desc')->paginate(10);
+        $productos = Product::orderBy('id', 'desc')->paginate(4);
+        $cart = session()->get('cart', []);
+
         // var_dump($productos);
-        return view('carrito.index', compact('productos','categorias','gramajes','marcas'));
+        return view('carrito.index', compact('cart','productos','categorias','gramajes','marcas'));
     }  
 
     public function addToCart(Request $request, $productId)
@@ -76,7 +78,6 @@ class CarritoContoller extends Controller
     // Ver el contenido del carrito
     public function viewCart(Request $request)
     {
-        $cart = session()->get('cart', []);
         $user = auth()->user();
         $hospitalId = $user->hospitals[0]->id;
         $query = Order::orderBy('id', 'desc');
@@ -86,7 +87,7 @@ class CarritoContoller extends Controller
             $query->whereDate('created_at', $request->input('filter_date'));
         } 
         $pedidos = $query->paginate(10);
-        return view('carrito.cart.index', compact('cart','pedidos'));
+        return view('carrito.cart.index', compact('pedidos'));
     }
 
     public function updateCart($id, $accion)
@@ -114,7 +115,8 @@ class CarritoContoller extends Controller
         }
         $this->total($cart);
 
-        return redirect()->route('cart.viewCart')->with('success', 'Cart updated successfully.');
+       
+        return redirect()->route('carrito.carrito')->with('success', 'Cart updated successfully.');
     }
 
 
@@ -133,10 +135,10 @@ class CarritoContoller extends Controller
 
             $this->total($cart);
             // Puedes redirigir al usuario de vuelta al carrito o a donde desees
-            return redirect()->route('cart.viewCart')->with('status', 'Producto eliminado del carrito exitosamente.');
+            return redirect()->route('carrito.carrito')->with('status', 'Producto eliminado del carrito exitosamente.');
         } else {
             // Si el producto no existe en el carrito, puedes manejarlo según tus necesidades
-            return redirect()->route('cart.viewCart')->with('error', 'El producto no se encontraba en el carrito.');
+            return redirect()->route('carrito.carrito')->with('error', 'El producto no se encontraba en el carrito.');
         }
     }
 

@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(IpesSeeder::class);
         $this->call(GrammageSeeder::class);
         $this->call(HospitalesTableSeeder::class);
+        $this->call(CategorySeeder::class);
+        $this->call(ProductosTableSeeder::class);
 
         //creo un usuario de prueba para la base
         \App\Models\User::factory()->create([
@@ -31,11 +33,11 @@ class DatabaseSeeder extends Seeder
             'surname' => 'User',
             'email' => 'test@test.com',
         ])->assignRole('Admin');
-        \App\Models\User::factory()->create([
-            'name' => 'Test',
-            'surname' => 'User',
-            'email' => 'test2@test.com',
-            'password' => bcrypt('adrian961228'),
-        ])->assignRole('Admin');
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test',
+        //     'surname' => 'User',
+        //     'email' => 'test2@test.com',
+        //     'password' => bcrypt('adrian961228'),
+        // ])->assignRole('Admin');
     }
 }

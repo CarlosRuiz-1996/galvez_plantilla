@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight">
-            {{ __('Productos agregados') }}
+            {{ __('Pedidos') }}
         </h2>
     </x-slot>
 
@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-alert />
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            {{-- <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <form action="{{route('cart.generarPedido')}}" method="POST">
                     @csrf
                     <div class="grid grid-cols-9 gap-4">
@@ -22,7 +22,7 @@
                                             <div class="col-span-2 flex items-center">
                                                 {{-- <img src="{{ asset('img/producto.png') }}"
                                                 alt="{{ $productData['product']['descripcion'] }}"
-                                                class="w-16 h-16 object-cover rounded-full"> --}}
+                                                class="w-16 h-16 object-cover rounded-full"> - -}}
                                                 <div class="ml-4">
                                                     <h2 class="text-lg font-semibold">
                                                         {{ $productData['product']['descripcion'] }}</h2>
@@ -122,7 +122,7 @@
                             </div>
                         @endif
                 </form>
-            </div>
+            </div> --}}
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -134,13 +134,13 @@
                                 Hospital ID
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Deadline
+                                Fecha de entrega
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Observations
+                                Observaciones
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status
+                                Estatus
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Total
