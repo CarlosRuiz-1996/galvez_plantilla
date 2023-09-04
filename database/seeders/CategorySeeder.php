@@ -1,47 +1,34 @@
 <?php
 
 namespace Database\Seeders;
+use App\Models\Categories;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CategorySeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        // Lista de categorías con múltiples palabras clave
-        $categorias = [
-            [
-                'name' => 'Lácteos',
-                'palabra_clave' => 'leche,crema,queso,yogurt,leche deslactosada,crema baja en grasa',
-                'status' => 1,
-            ],
-            [
-                'name' => 'Verduras',
-                'palabra_clave' => 'verduras,vegetales,lechuga,tomate,zanahoria,brocoli,cebolla',
-                'status' => 1,
-            ],
-            [
-                'name' => 'Frutas',
-                'palabra_clave' => 'frutas,manzana,pera,uva,platano,naranja,kiwi',
-                'status' => 1,
-            ],
-            [
-                'name' => 'Aceites',
-                'palabra_clave' => 'aceite,canola,maíz,oliva,aceite en spray,aceite de oliva',
-                'status' => 1,
-            ],
-        ];
+        Categories::create([
+            'name' => 'Lacteos',
+            'palabra_clave' => 'leche,queso,crema,mantequilla,yogurt'
+        ]);
 
-        // Inserta las categorías en la tabla
-        foreach ($categorias as $categoria) {
-            DB::table('categories')->insert([
-                'name' => $categoria['name'],
-                'palabra_clave' => $categoria['palabra_clave'],
-                'created_at' => now(),
-                'updated_at' => now(),
-                'status' => $categoria['status'],
-            ]);
-        }
+        Categories::create([
+            'name' => 'Frutas',
+            'palabra_clave' => 'mandarina,toronja,platano,fresa,cereza,manzana'
+        ]);
+        Categories::create([
+            'name' => 'Verduras',
+            'palabra_clave' => 'ajo,aguacate,apio,Albahaca,jitomate'
+        ]);
+
+        Categories::create([
+            'name' => 'Abarrotes',
+            'palabra_clave' => 'gelatina,aceite,huevo,azucar,cafe,te,'
+        ]);
     }
 }

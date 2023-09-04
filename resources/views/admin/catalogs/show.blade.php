@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight inline-flex items-center">
-            <a href="{{route('admin.catalogs')}}" title="ATRAS">
+            <a href="{{ route('admin.catalogs') }}" title="ATRAS">
                 <svg class="w-5 h-5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"
@@ -28,7 +28,7 @@
                     <div class="flex items-center justify-between pb-4">
                         <div>
                             {{-- espacio para el buscador --}}
-                            <a href="{{ route('admin.catalogs.crear',$catalogo) }}" type="button"
+                            <a href="{{ route('admin.catalogs.crear', $catalogo) }}" type="button"
                                 class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">
                                 Nuevo +
                             </a>
@@ -53,6 +53,9 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">Nombre</th>
+                                @if ($catalogo == 'Categoria')
+                                    <th scope="col" class="px-6 py-3">Palabras clave</th>
+                                @endif
                                 <th scope="col" class="px-6 py-3">Estatus</th>
                                 <th scope="col" class="px-6 py-3">Fecha de alta</th>
                                 <th scope="col" class="px-6 py-3">Acciones</th>
@@ -65,6 +68,11 @@
                                     class="table-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="px-6 py-4" data-name="{{ $list->name }}">{{ $list->name }}
                                     </td>
+                                    @if ($catalogo == 'Categoria')
+                                        <td class="px-6 py-4" data-name="{{ $list->palabra_clave }}">
+                                            {{ $list->palabra_clave }}
+                                        </td>
+                                    @endif
                                     <td class="px-6 py-4" data-status="{{ $list->status }}">
                                         @if ($list->status == 1)
                                             <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-100 dark:bg-gray-800 dark:text-blue-400"
@@ -82,24 +90,26 @@
                                         {{ $list->created_at }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        @if($list->status!=0)
-                                        <a href="{{ route('admin.catalogs.edit', ['ctg'=>$catalogo,'id'=>$list->id] ) }}"
-                                            class="text-blue-600 hover:underline">Editar</a>
-                                        <form action="{{ route('admin.catalogs.destroy', ['ctg'=>$catalogo,'id'=>$list->id]) }}"
-                                            method="get">
-                                            @csrf
+                                        @if ($list->status != 0)
+                                            <a href="{{ route('admin.catalogs.edit', ['ctg' => $catalogo, 'id' => $list->id]) }}"
+                                                class="text-blue-600 hover:underline">Editar</a>
+                                            <form
+                                                action="{{ route('admin.catalogs.destroy', ['ctg' => $catalogo, 'id' => $list->id]) }}"
+                                                method="get">
+                                                @csrf
 
-                                            <button type="submit"
-                                                class="text-red-600 hover:underline">Eliminar</button>
-                                        </form>
+                                                <button type="submit"
+                                                    class="text-red-600 hover:underline">Eliminar</button>
+                                            </form>
                                         @else
-                                        <form action="{{ route('admin.catalogs.reactivar', ['ctg'=>$catalogo,'id'=>$list->id]) }}"
-                                            method="get">
-                                            @csrf
+                                            <form
+                                                action="{{ route('admin.catalogs.reactivar', ['ctg' => $catalogo, 'id' => $list->id]) }}"
+                                                method="get">
+                                                @csrf
 
-                                            <button type="submit"
-                                                class="text-green-600 hover:underline">Reactivar</button>
-                                        </form>
+                                                <button type="submit"
+                                                    class="text-green-600 hover:underline">Reactivar</button>
+                                            </form>
                                         @endif
                                     </td>
                                 </tr>

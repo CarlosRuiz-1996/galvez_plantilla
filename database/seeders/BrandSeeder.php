@@ -44,6 +44,7 @@ class BrandSeeder extends Seeder
         Brand::create(['name' => 'PATRONA']);
         Brand::create(['name' => 'MAZOLA']);
         Brand::create(['name' => 'YBARRA']);
-      
+        Brand::create(['name' => 'LA FRANJA']);
+
     }
 }

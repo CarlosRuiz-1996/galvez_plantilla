@@ -1,4 +1,5 @@
 <x-app-layout>
+ 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight">
             {{ __('Pedidos') }}
@@ -15,7 +16,7 @@
                         <label for="hospital_id" class="font-medium">Filtrar por Hospital:</label>
                         <select name="hospital_id" id="hospital_id" class="border rounded-md px-2 py-1">
                             <option value="">Todos los hospitales</option>
-                            @foreach($hospitals as $hospital)
+                            @foreach ($hospitals as $hospital)
                                 <option value="{{ $hospital->id }}"
                                     {{ request('hospital_id') == $hospital->id ? 'selected' : '' }}>
                                     {{ $hospital->name }}
@@ -25,8 +26,8 @@
                     </div>
                     <div>
                         <label for="filter_date" class="font-medium">Filtrar por Fecha:</label>
-                        <input type="date" name="filter_date" id="filter_date"
-                            value="{{ request('filter_date') }}" class="border rounded-md px-2 py-1">
+                        <input type="date" name="filter_date" id="filter_date" value="{{ request('filter_date') }}"
+                            class="border rounded-md px-2 py-1">
                     </div>
                     <div>
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
@@ -43,7 +44,8 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Hospital
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Total
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -75,6 +77,8 @@
                 {{ $pedidos->appends(request()->except('page'))->links() }}
             </div>
         </div>
+
+        
     </div>
     <div id="detalleModal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="modal-content bg-white rounded-lg">
@@ -97,6 +101,34 @@
             </div>
             <!-- Agregar un botón de cerrar -->
             
+        </div>
+    </div> --}}
+    <div id="detalleModal" tabindex="-1" aria-hidden="true"
+    class="modal hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="relative w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Detalles del pedido
+                </h3>
+                <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="defaultModal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-content bg-white rounded-lg p-6">
+                <!-- Aquí se cargarán los detalles del pedido mediante AJAX -->
+            </div>
+           
         </div>
     </div>
     
