@@ -99,7 +99,7 @@
                             <div class="nav-link-with-cart">
                                 <i class="fas fa-shopping-cart"></i> <!-- Ícono de carrito -->
                                 {{ __('Pedidos') }}
-                                <span class="cart-count">{{ count(session('cart', [])) }}</span>
+                                {{-- <span class="cart-count">{{ count(session('cart', [])) }}</span> --}}
                                 <!-- Cantidad de productos en el carrito -->
                             </div>
                         </x-nav-link>

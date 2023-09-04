@@ -9,33 +9,39 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-alert />
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <select id="filtroCategoria">
-                    <option value="0">Categorías</option>
-                    @foreach ($categorias as $categoria)
-                        <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
-                    @endforeach
-                </select>
-                <select id="filtroMarca">
-                    <option value="0">Todas las Marcas</option>
-                    @foreach ($marcas as $marca)
-                        <option value="{{ $marca->id }}">{{ $marca->name }}</option>
-                    @endforeach
-                </select>
+                <div class="flex space-x-4"> <!-- Contenedor flex para mostrar los selectores en la misma fila -->
+                    <select id="filtroCategoria"
+                        class="block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="0">Categorías</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
+                        @endforeach
+                    </select>
 
-                <select id="filtroGramaje">
-                    <option value="0">Todos los Gramajes</option>
-                    @foreach ($gramajes as $gramaje)
-                        <option value="{{ $gramaje->id }}">{{ $gramaje->name }}</option>
-                    @endforeach
-                </select>
+                    <select id="filtroMarca"
+                        class="block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="0">Todas las Marcas</option>
+                        @foreach ($marcas as $marca)
+                            <option value="{{ $marca->id }}">{{ $marca->name }}</option>
+                        @endforeach
+                    </select>
+
+                    <select id="filtroGramaje"
+                        class="block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="0">Todos los Gramajes</option>
+                        @foreach ($gramajes as $gramaje)
+                            <option value="{{ $gramaje->id }}">{{ $gramaje->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                {{-- <h3 class="text-lg font-semibold mb-4">Productos en el producto</h3> --}}
 
-                <!-- Lista de productos en el carrito -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <!-- Carrusel de productos -->
+                <div class="slick-carousel">
                     @foreach ($productos as $producto)
-                        <div class="bg-white p-4 border border-gray-300 shadow-sm rounded-lg producto"
+                        <div class="bg-white mr-4 p-4 border border-gray-300 shadow-sm rounded-lg producto"
                             data-categoria="{{ $producto->category_id }}" data-marca="{{ $producto->brand_id }}"
                             data-gramaje="{{ $producto->grammage_id }}">
                             <h4 class="text-lg font-semibold mb-2">{{ $producto->descripcion }}</h4>
@@ -62,13 +68,11 @@
                                         poder hacer compras.
                                     </div>
                                 @endif
-
                             </form>
                         </div>
                     @endforeach
                 </div>
             </div>
-
             <hr>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <form action="{{ route('cart.generarPedido') }}" method="POST">
@@ -90,14 +94,18 @@
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach ($cart as $productId => $productData)
-                                            <tr class="table-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                                <td class="px-6 py-4"> {{ $productData['product']['descripcion'] }}</td>
-                                                <td > {{ $productData['product']['brand']['name'] }}</td>
-                                                <td class="px-6 "   > {{ $productData['product']['presentation']['name'] }}</td>
-                                                <td class="px-6 "   > ${{ $productData['product']['price'] }}</td>
-                                                <td class="px-6 "   > {{ $productData['product']['iva']['name'] }}%</td>
-                                                <td class="px-6 "   > ${{ $productData['product']['ieps']['name'] }}%</td>
-                                                <td >
+                                            <tr
+                                                class="table-row bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                                <td class="px-6 py-4"> {{ $productData['product']['descripcion'] }}
+                                                </td>
+                                                <td> {{ $productData['product']['brand']['name'] }}</td>
+                                                <td class="px-6 ">
+                                                    {{ $productData['product']['presentation']['name'] }}</td>
+                                                <td class="px-6 "> ${{ $productData['product']['price'] }}</td>
+                                                <td class="px-6 "> {{ $productData['product']['iva']['name'] }}%</td>
+                                                <td class="px-6 "> ${{ $productData['product']['ieps']['name'] }}%
+                                                </td>
+                                                <td>
                                                     <div class="col-span-1 flex items-center space-x-4 ml-4">
                                                         <a type="button"
                                                             class="text-gray-500 font-semibold text-xl focus:outline-none"
@@ -111,7 +119,8 @@
                                                             href="{{ route('cart.update', ['accion' => 'increase', 'id' => $productId]) }}">+</a>
                                                     </div>
                                                 </td>
-                                                <td class="px-6 "   > ${{ $productData['quantity'] * $productData['product']['total'] }}
+                                                <td class="px-6 ">
+                                                    ${{ $productData['quantity'] * $productData['product']['total'] }}
                                                 </td>
 
                                                 <td> <a href="{{ route('cart.removeProduct', ['productId' => $productId]) }}"
@@ -170,6 +179,7 @@
         </div>
 
     </div>
+
     <script>
         // Obtén referencias a los selectores de marca, gramaje y categoría
         var filtroMarcaSelect = document.getElementById('filtroMarca');
@@ -216,5 +226,29 @@
                 }
             }
         }
+
+        $(document).ready(function() {
+            $('.slick-carousel').slick({
+                slidesToShow: 4, // Número de productos que se muestran en cada slide
+                slidesToScroll: 1, // Número de productos que se desplazan en cada cambio de slide
+                autoplay: true, // Reproducción automática del carrusel
+                autoplaySpeed: 3000, // Velocidad de reproducción automática en milisegundos
+                responsive: [{
+                        breakpoint: 768, // Cambios en la configuración en pantallas más pequeñas
+                        settings: {
+                            slidesToShow: 2,
+                        }
+                    },
+                    {
+                        breakpoint: 576, // Cambios en la configuración en pantallas aún más pequeñas
+                        settings: {
+                            slidesToShow: 1,
+                        }
+                    }
+                ],
+                prevArrow: '<button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" aria-label="Anterior">Anterior</button>',
+                nextArrow: '<button class="mt-0 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" aria-label="Siguiente">Siguiente</button>'
+            });
+        });
     </script>
 </x-app-layout>

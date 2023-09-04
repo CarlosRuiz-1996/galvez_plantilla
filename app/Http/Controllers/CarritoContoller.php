@@ -19,7 +19,7 @@ class CarritoContoller extends Controller
         $marcas = Brand::all();
         $gramajes = Grammage::all();
         $categorias = Categories::all();
-        $productos = Product::orderBy('id', 'desc')->paginate(4);
+        $productos = Product::get();
         $cart = session()->get('cart', []);
 
         // var_dump($productos);
