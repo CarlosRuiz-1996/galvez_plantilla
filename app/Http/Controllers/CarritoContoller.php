@@ -19,9 +19,8 @@ class CarritoContoller extends Controller
         $marcas = Brand::all();
         $gramajes = Grammage::all();
         $categorias = Categories::all();
-        $productos = Product::get();
+        $productos = Product::orderBy('id', 'desc')->get();
         $cart = session()->get('cart', []);
-
         // var_dump($productos);
         return view('carrito.index', compact('cart','productos','categorias','gramajes','marcas'));
     }  
