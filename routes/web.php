@@ -44,7 +44,9 @@ Route::middleware('auth')->group(function () {
     //pedidos
     Route::get('admin/orders', [OrderController::class, 'index'])->name('admin.orders');
     Route::get('/admin/orders/{pedido}/detalle', [OrderController::class, 'detalle'])->name('admin.orders.detalle');
+    Route::get('/admin/orders/{pedido}/detalleadmin', [OrderController::class, 'detalleordenes'])->name('admin.orders.detalleordenes');
     Route::put('admin/orders/liberar', [OrderController::class, 'liberar'])->name('admin.orders.liberar');
+    Route::get('/export/excel',  [OrderController::class, 'exportToExcel'])->name('export.excel');
     //catalogos
     Route::get('admin/catalogs', [CatalogController::class, 'index'])->name('admin.catalogs');
     Route::get('admin/catalogs/show/{ctg?}', [CatalogController::class, 'show'])->name('admin.catalogs.show');

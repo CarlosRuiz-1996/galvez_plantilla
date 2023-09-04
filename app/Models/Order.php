@@ -11,12 +11,16 @@ class Order extends Model
 
     public function hospital()
     {
-        return $this->belongsTo('App\Models\Hospital', 'hospital_id');
+        return $this->belongsTo(Hospital::class);
     }
 
     
     public function detalles()
     {
         return $this->hasMany('App\Models\Detail');
+    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

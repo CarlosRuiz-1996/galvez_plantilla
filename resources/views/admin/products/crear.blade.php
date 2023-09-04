@@ -36,7 +36,7 @@
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Categoría</label>
                             <select name="categoria" id="categoria"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <option value="" disabled {{ isset($producto) ? '':'selected'}}>Select a category</option>
+                                <option value="" disabled {{ isset($producto) ? '':'selected'}}>Seleccione categoria</option>
                                 @foreach ($categorias as $categoria)
                                 <option value="{{ $categoria->id }}"
                                     {{ isset($producto) && $producto->categoria_id == $categoria->id ? 'selected' : '' }}>
@@ -48,10 +48,10 @@
 
                         <div>
                             <label for="grammage_id"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Grammage</label>
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Gramaje</label>
                             <select name="grammage_id" id="grammage_id"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <option value="" disabled selected>Select Grammage</option>
+                                <option value="" disabled selected>Selecccione gramaje</option>
                                 @foreach ($grammages as $grammage)
                                     <option value="{{ $grammage->id }}"
                                         {{ isset($producto) && $producto->grammage_id == $grammage->id ? 'selected' : '' }}>
@@ -80,10 +80,10 @@
 
                         <div>
                             <label for="brand_id"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Brand ID</label>
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Marca</label>
                             <select name="brand_id" id="brand_id"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <option value="" disabled selected>Select a brand</option>
+                                <option value="" disabled selected>Selecciona la marca</option>
                                 @foreach ($brands as $brand)
                                     <option value="{{ $brand->id }}"
                                         {{ isset($producto) && $producto->brand_id == $brand->id ? 'selected' : '' }}>
@@ -96,7 +96,7 @@
 
                         <div>
                             <label for="price"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
+                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Precio</label>
                             <input type="number" name="price" id="price" onchange="calcularTotal()"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
                                 value="{{ $producto->price ?? '' }}">
@@ -108,7 +108,7 @@
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">IVA</label>
                             <select name="iva_id" id="iva_id" onchange="calcularTotal()"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <option value="" disabled selected>Select IVA</option>
+                                <option value="" disabled selected>Selecciona el IVA</option>
                                 @foreach ($iva as $iv)
                                     <option value="{{ $iv->id }}"
                                         {{ isset($producto) && $producto->iva_id == $iv->id ? 'selected' : '' }}>
@@ -123,7 +123,7 @@
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">IEPS</label>
                             <select name="ieps_id" id="ieps_id" onchange="calcularTotal()"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                                <option value="" disabled selected>Select IEPS</option>
+                                <option value="" disabled selected>Selecciona el  IEPS</option>
                                 @foreach ($ieps as $iep)
                                     <option value="{{ $iep->id }}"
                                         {{ isset($producto) && $producto->ieps_id == $iep->id ? 'selected' : '' }}>
