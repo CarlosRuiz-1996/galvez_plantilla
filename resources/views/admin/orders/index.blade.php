@@ -46,7 +46,7 @@
                             </th>
                             <th scope="col"
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Total
+                                Total de pedidos 
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 <span class="sr-only">Detalles</span>
@@ -102,7 +102,7 @@
             <!-- Agregar un botón de cerrar -->
             
         </div>
-    </div> --}}
+    </div> 
     <div id="detalleModal" tabindex="-1" aria-hidden="true"
     class="modal hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
     <div class="relative w-full max-w-2xl max-h-full">
