@@ -21,7 +21,7 @@
                             @foreach($detallePedidos as $detallePedido)
                                 <!-- Fila de datos del pedido -->
                                 <tr class="morada collapsed" data-bs-toggle="collapse" data-bs-target="#detalle{{ $detallePedido->id }}" aria-expanded="false" aria-controls="#detalle{{ $detallePedido->id }}">
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $detallePedido->id }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap bg-orange-500">{{ $detallePedido->id }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $detallePedido->deadline }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">{{ $detallePedido->observations }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
