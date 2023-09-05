@@ -1,11 +1,49 @@
 <x-app-layout>
- 
+   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script> -->
+   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+
+   <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+   <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+   <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script><!-- excel -->
+   <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+   <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+   <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>    
+   <style>
+    .table-container {
+    max-height: 300px; /* Ajusta la altura máxima según sea necesario */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+}
+   
+/* Agrega reglas de estilo según sea necesario */
+#miTabla {
+    max-height: 400px; /* Ajusta la altura máxima según sea necesario */
+    overflow-y: auto; /* Agrega una barra de desplazamiento vertical si es necesario */
+}
+.dataTables_wrapper .dt-buttons .dt-button {
+    padding: 5px 10px; /* Ajusta el padding según sea necesario para el tamaño deseado */
+    font-size: 10px; /* Ajusta el tamaño de fuente según sea necesario */
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px 10px; /* Ajusta el padding según sea necesario para el tamaño deseado */
+    font-size: 12px; /* Ajusta el tamaño de fuente según sea necesario */
+}
+
+/* Reducir el tamaño del botón de "Mostrar Número de Registros" */
+.dataTables_length select {
+    padding: 2px; /* Ajusta el padding según sea necesario para el tamaño deseado */
+    font-size: 12px; /* Ajusta el tamaño de fuente según sea necesario */
+}
+</style>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-purple-800 dark:text-gray-200 leading-tight">
             {{ __('Pedidos') }}
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-alert />
@@ -30,11 +68,18 @@
                             class="border rounded-md px-2 py-1">
                     </div>
                     <div>
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">
+                        <button type="submit" class="bg-blue-500 text-white px-1 py-2 rounded-md">
                             Aplicar Filtros
+                        </button>
+                        <button type="button" class="bg-green-700 text-white px-1 py-2 rounded-md">
+                            EXCEL
+                        </button>
+                        <button type="button" class="bg-red-500 text-white px-1 py-2 rounded-md">
+                            PDF
                         </button>
                     </div>
                 </form>
+
             </div>
 
             <div class="overflow-x-auto">
@@ -81,7 +126,7 @@
         
     </div>
     <div id="detalleModal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="modal-content bg-white rounded-lg">
+        <div class="modal-content bg-white rounded-lg h-[80vh] w-[80vw]">
             <!-- Encabezado del modal -->
             <div class="modal-header bg-gray-200 px-4 py-2 rounded-t-lg flex justify-between items-center">
                 <h3 class="text-lg font-semibold text-gray-800">Detalles del Pedido</h3>
@@ -96,41 +141,11 @@
                 <p>Cargando detalles...</p>
             </div>
             <!-- Pie de página (footer) del modal -->
-            <div class="modal-footer bg-gray-200 px-4 py-2 rounded-b-lg">
-                <button class="" onclick="cerrarModal(event)">Cerrar</button>
-            </div>
-            <!-- Agregar un botón de cerrar -->
             
-        </div>
-    </div> 
-    <div id="detalleModal" tabindex="-1" aria-hidden="true"
-    class="modal hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-    <div class="relative w-full max-w-2xl max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-            <!-- Modal header -->
-            <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                    Detalles del pedido
-                </h3>
-                <button type="button"
-                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                    data-modal-hide="defaultModal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-            </div>
-            <!-- Modal body -->
-            <div class="modal-content bg-white rounded-lg p-6">
-                <!-- Aquí se cargarán los detalles del pedido mediante AJAX -->
-            </div>
-           
+            <!-- Agregar un botón de cerrar -->
         </div>
     </div>
+    
     
     <script>
         function cerrarModal(event) {
@@ -140,50 +155,78 @@
         }
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const detallesButtons = document.querySelectorAll('.detalles-btn');
-            const modal = document.getElementById('detalleModal');
-            const modalContent = modal.querySelector('.modal-body');
-        
-            detallesButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault(); // Evita el comportamiento predeterminado del enlace/button
-                    event.stopPropagation(); // Detiene la propagación del evento
-        
-                    const pedidoId = button.getAttribute('data-id');
-        
-                    // Lógica para cargar los detalles del pedido en el modal (puedes usar AJAX)
-                    cargarDetallesPedido(pedidoId);
-        
-                    // Muestra el modal
-                    modal.classList.remove('hidden');
-                });
-            });
-        
-            // Cierra el modal al hacer clic fuera de él
-            modal.addEventListener('click', function (event) {
-                if (event.target === modal) {
-                    modal.classList.add('hidden');
+        $(document).ready(function() {
+    const detallesButtons = document.querySelectorAll('.detalles-btn');
+    const modal = document.getElementById('detalleModal');
+    const modalContent = modal.querySelector('.modal-body');
+    
+    detallesButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+    
+            const pedidoId = button.getAttribute('data-id');
+    
+            modalContent.innerHTML = '<p>Cargando detalles...</p>';
+    
+            $.ajax({
+                url: '/admin/orders/' + pedidoId + '/detalleadmin',
+                method: 'GET',
+                success: function(response) {
+                    modalContent.innerHTML = response;
+                    
+                    // Inicializa DataTables después de cargar el contenido
+                    $('#miTabla').DataTable({
+    dom: 'Brtip',
+    ordering: false,
+    autoWidth: true, // Habilita los botones de exportación
+    buttons: [
+        'excel', // Botón de Excel
+        'pdf' // Botón de PDF
+    ],
+    order: [],
+    "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros por página",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando datos del _START_ al _END_ de un total de _TOTAL_ datos",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+});
+                },
+                error: function() {
+                    modalContent.innerHTML = '<p>Error al cargar los detalles.</p>';
                 }
             });
-        
-            function cargarDetallesPedido(pedidoId) {
-                // Utiliza AJAX para cargar los detalles del pedido en el modalContent
-                // Por ejemplo:
-                modalContent.innerHTML = '<p>Cargando detalles...</p>';
-                // Realiza la solicitud AJAX para cargar los detalles del pedido
-                $.ajax({
-                    url: '/admin/orders/' + pedidoId + '/detalleadmin',
-                    method: 'GET',
-                    success: function(response) {
-                        modalContent.innerHTML = response;
-                    },
-                    error: function() {
-                        modalContent.innerHTML = '<p>Error al cargar los detalles.</p>';
-                    }
-                });
-            }
+    
+            modal.classList.remove('hidden');
         });
+    });
+    
+    modal.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+});
+
     </script>
     <script>
         $(document).ready(function () {
@@ -209,4 +252,23 @@
             });
         });
     </script>
+    <script>
+        // Obtener todas las filas de detalles
+        const detailRows = document.querySelectorAll(".order-details-row");
+    
+        // Agregar un evento de clic a cada fila de detalles para alternar su visibilidad
+        detailRows.forEach((row) => {
+            row.addEventListener("click", () => {
+                const orderId = row.getAttribute("data-order-id");
+                const detailsTable = row.querySelector("table");
+    
+                if (detailsTable.style.display === "none" || detailsTable.style.display === "") {
+                    detailsTable.style.display = "table";
+                } else {
+                    detailsTable.style.display = "none";
+                }
+            });
+        });
+    </script>
+    
 </x-app-layout>
