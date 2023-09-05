@@ -173,7 +173,7 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    {{ $pedido->total }}
+                                   $ {{ $pedido->total }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a type="button" class="text-orange-700 detalles-btn" data-id="{{ $pedido->id }}">
