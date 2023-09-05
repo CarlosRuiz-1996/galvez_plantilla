@@ -8,6 +8,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-alert />
+           
+           
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="flex space-x-4"> <!-- Contenedor flex para mostrar los selectores en la misma fila -->
                     <select id="filtroCategoria"
@@ -39,7 +41,7 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <!-- Carrusel de productos -->
-                <div class="slick-carousel">
+                <div class="slick-carousel" >
                     @foreach ($productos as $producto)
                         <div class="bg-white mr-4 p-4 border border-gray-300 shadow-sm rounded-lg producto"
                             data-categoria="{{ $producto->category_id }}" data-marca="{{ $producto->brand_id }}"
@@ -231,8 +233,8 @@
             $('.slick-carousel').slick({
                 slidesToShow: 4, // Número de productos que se muestran en cada slide
                 slidesToScroll: 1, // Número de productos que se desplazan en cada cambio de slide
-                autoplay: true, // Reproducción automática del carrusel
-                autoplaySpeed: 3000, // Velocidad de reproducción automática en milisegundos
+                autoplay: false, // Reproducción automática del carrusel
+                // autoplaySpeed: 3000, // Velocidad de reproducción automática en milisegundos
                 responsive: [{
                         breakpoint: 768, // Cambios en la configuración en pantallas más pequeñas
                         settings: {
