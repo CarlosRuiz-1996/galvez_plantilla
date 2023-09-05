@@ -5,14 +5,15 @@
    <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.datatables.net/rss.xml">
    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
-
-   <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script><!-- excel -->
    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
    <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>    
+  
+
    <style>
     .table-container {
     max-height: 300px; /* Ajusta la altura máxima según sea necesario */
@@ -228,47 +229,11 @@
 });
 
     </script>
-    <script>
-        $(document).ready(function () {
-            $('#exportExcel').click(function () {
-                alert("clic");
-                $.ajax({
-                    url: '{{ route('export.excel') }}', // Reemplaza 'export.excel' con la ruta adecuada a tu controlador
-                    method: 'GET',
-                    success: function (response) {
-                        // Crea un enlace temporal y haz clic en él para iniciar la descarga
-                        var a = document.createElement('a');
-                        a.href = response.file_path; // La respuesta del controlador debe incluir la ruta del archivo Excel
-                        a.download = 'tabla_pedidos.xlsx'; // Nombre del archivo
-                        a.style.display = 'none';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                    },
-                    error: function () {
-                        alert('Error al exportar a Excel');
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
-        // Obtener todas las filas de detalles
-        const detailRows = document.querySelectorAll(".order-details-row");
-    
-        // Agregar un evento de clic a cada fila de detalles para alternar su visibilidad
-        detailRows.forEach((row) => {
-            row.addEventListener("click", () => {
-                const orderId = row.getAttribute("data-order-id");
-                const detailsTable = row.querySelector("table");
-    
-                if (detailsTable.style.display === "none" || detailsTable.style.display === "") {
-                    detailsTable.style.display = "table";
-                } else {
-                    detailsTable.style.display = "none";
-                }
-            });
-        });
-    </script>
-    
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+      <script src="assets/js/scripts.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+      <!-- <script src="assets/demo/chart-area-demo.js"></script>
+      <script src="assets/demo/chart-bar-demo.js"></script> -->
+      <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+      <script src="assets/js/datatables-simple-demo.js"></script>
 </x-app-layout>
