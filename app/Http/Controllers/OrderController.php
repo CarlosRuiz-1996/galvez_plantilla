@@ -54,7 +54,12 @@ class OrderController extends Controller
 
     public function detalleordenes($id)
     {
+        
+
         $detallePedidos = Order::where('hospital_id', $id)->get();
+
+        // var_dump($detallePedidos);
+        // die;
         return view('admin.orders.orderdetalleorder', ['detallePedidos' => $detallePedidos ]);
     }
 

@@ -17,6 +17,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@alpinejs/collapse": "^3.13.0",
         "chart.js": "^4.3.3",
         "sweetalert2": "^11.7.27"
     }

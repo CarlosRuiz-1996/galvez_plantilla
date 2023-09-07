@@ -1,59 +1,100 @@
-
 <div class="container">
-    <x-alert />
     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-1 bg-white border-b border-gray-200">
             <div class="table-container" style="max-height: 420px; overflow-y: auto;">
                 <div class="table-responsive">
-                    <table id="miTabla" class="custom-table" style="font-size: 10px">
-                        <thead>
+
+
+                    <table class="table border-t border-b border-collapse " id="miTabla">
+                        <thead class=" bg-gray-50">
                             <tr>
-                                <!-- Encabezados de la tabla -->
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clave pedido</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha entrega</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Observaciones</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estatus</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha de orden</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    CLAVE PEDIDO</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    FECHA ENTREGA</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    OBSERVACIONES</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    ESTATUS</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    TOTAL</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    FECHA DE ORDEN</th>
+
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach($detallePedidos as $detallePedido)
-                                <!-- Fila de datos del pedido -->
-                                <tr class="morada collapsed" data-bs-toggle="collapse" data-bs-target="#detalle{{ $detallePedido->id }}" aria-expanded="false" aria-controls="#detalle{{ $detallePedido->id }}">
-                                    <td class="px-6 py-4 whitespace-nowrap bg-orange-500">{{ $detallePedido->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $detallePedido->deadline }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $detallePedido->observations }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
+                        <tbody class="text-gray-500">
+                            @foreach ($detallePedidos as $detallePedido)
+                                <tr class="toggle-pedido ">
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">{{ $detallePedido->id }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap  text-gray-600">
+                                        {{ $detallePedido->deadline }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap  text-gray-600">
+                                        {{ $detallePedido->observations }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap  text-gray-600">
                                         @if ($detallePedido->status === 1)
                                             Creado
                                         @else
                                             Surtido
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">$ {{ number_format($detallePedido->total, 2) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">{{ $detallePedido->created_at }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap  text-gray-600">${{ $detallePedido->total }}
+                                    </td>
+
+                                    <td class="px-6 py-4 whitespace-nowrap  text-gray-600">
+                                        {{ $detallePedido->updated_at }}</td>
+
+
                                 </tr>
-                                <!-- Fin de la fila de datos del pedido -->
-                                
-                                <!-- Filas de detalles del pedido (ocultas por defecto) -->
-                                @foreach($detallePedido->detalles as $detalle)
-                                    <tr class="blanca collapsed" id="detalle{{ $detallePedido->id }}">
-                                        <td class="px-6 py-4 whitespace-nowrap"></td>
-                                        <td class="px-6 py-4 whitespace-nowrap"></td>
-                                        <td class="px-6 py-4 whitespace-nowrap"></td>
-                                        <!-- Datos de los detalles del pedido -->
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $detalle->product->descripcion }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">Precio: ${{ number_format($detalle->product->price, 2) }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">Cantidad: {{ $detalle->amount }}</td>
-                                    </tr>
-                                @endforeach
-                                <!-- Fin de las filas de detalles del pedido -->
+                                <tr class="detalle-pedido" style="display: none;">
+                                    <td colspan="6" class=" bg-slate-100">
+                                        <table class="table table-bordered ml-80">
+                                            <tbody>
+                                                @if($detallePedido->detalles)
+
+                                                @foreach ($detallePedido->detalles as $detalle)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>Producto:
+                                                            {{ $detalle->product->descripcion }}</td>
+                                                        <td>Precio: $ {{ $detalle->product->price }}</td>
+                                                        <td> Cantidad: {{ $detalle->amount }}</td>
+                                                        <td>Subtotal: $ {{ $detalle->product->price * $detalle->amount }}
+                                                        </td>
+
+                                                    </tr>
+                                                    
+                                                        
+                                                   
+                                                @endforeach
+                                                @else
+                                                <h2>sin producro</h2>
+                                            @endif
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+
                 </div>
             </div>
         </div>
     </div>
+
 </div>

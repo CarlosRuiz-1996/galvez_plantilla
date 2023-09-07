@@ -67,7 +67,7 @@
         </h2>
     </x-slot>
 
-    
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <x-alert />
@@ -119,13 +119,13 @@
                                 Total de pedidos
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                <span class="sr-only">Detalles</span>
+                                <span class="">Detalles</span>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($pedidos as $pedido)
-                            <tr>
+                            <tr >
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $hospitals->where('id', $pedido->hospital_id)->first()->name ?? 'N/A' }}
                                 </td>
@@ -172,15 +172,27 @@
         </div>
     </div>
 
+    <style>
+        /* Estilo para los elementos que activan el colapso */
+        .toggle-pedido {
+            cursor: pointer;
+            color: #007bff;
+            /* Color del enlace para el botón de colapso */
+        }
 
+        /* Estilo para las filas de detalle */
+        .detalle-pedido {
+            display: none;
+            /* Oculta las filas de detalle por defecto */
+        }
+    </style>
     <script>
         function cerrarModal(event) {
             event.stopPropagation(); // Detiene la propagación del evento
             const modal = document.getElementById('detalleModal');
             modal.classList.add('hidden');
         }
-    </script>
-    <script>
+    
         $(document).ready(function() {
             const detallesButtons = document.querySelectorAll('.detalles-btn');
             const modal = document.getElementById('detalleModal');
@@ -236,6 +248,18 @@
                                     }
                                 }
                             });
+
+
+                            // Agrega un evento de clic a los elementos que activan el colapso
+                            $('#miTabla tbody').on('click', '.toggle-pedido',
+                                function() {
+                                    var tr = $(this).closest('tr');
+                                    var detalleRow = tr.next('.detalle-pedido');
+
+                                    // Alternar la visibilidad del detalle del pedido
+                                    detalleRow.toggle();
+                                });
+
                         },
                         error: function() {
                             modalContent.innerHTML =
@@ -258,8 +282,7 @@
     </script>
     <script src="assets/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <!-- <script src="assets/demo/chart-area-demo.js"></script>
-      <script src="assets/demo/chart-bar-demo.js"></script> -->
+
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
     <script src="assets/js/datatables-simple-demo.js"></script>
 </x-app-layout>
