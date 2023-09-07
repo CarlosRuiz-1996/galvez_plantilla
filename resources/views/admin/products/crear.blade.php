@@ -187,7 +187,7 @@
         // Función para buscar la categoría
         function buscarCategoria() {
             var descripcion = document.getElementById('descripcion').value;
-            alert(descripcion);
+            // alert(descripcion);
             // Verificar si el campo de descripción ya tiene valor del controlador    
             // Realiza una solicitud AJAX para buscar la categoría
             $.ajax({
