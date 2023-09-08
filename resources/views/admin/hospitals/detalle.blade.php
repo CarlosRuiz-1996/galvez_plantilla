@@ -113,6 +113,7 @@
 
                                             <th scope="col" class="px-6 py-3">ENTREGA</th>
                                             <th scope="col" class="px-6 py-3">ESTATUS</th>
+                                            <th>DETALLES</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -131,6 +132,11 @@
                                                     {{ $pedido->deadline }}</td>
                                                 <td class="px-6 py-4" data-status="{{ $pedido->status }}">
                                                     {{ $pedido->status == 1 ? 'PENDIENTE' : 'ENTREGADO' }}</td>
+                                                    <td>
+                                                        <a type="button" class="text-orange-700  detalles-btn" data-id="{{ $pedido->id }}">
+                                                            Detalles
+                                                        </a>
+                                                    </td>
                                             </tr>
                                         @endforeach
 
@@ -147,5 +153,55 @@
             </div>
 
         </div>
-
+        <div id="detalleModal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div class="modal-content bg-white rounded-lg p-6">
+                <!-- Aquí se cargarán los detalles del pedido mediante AJAX -->
+            </div>
+        </div>
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const detallesButtons = document.querySelectorAll('.detalles-btn');
+            const modal = document.getElementById('detalleModal');
+            const modalContent = modal.querySelector('.modal-content');
+        
+            detallesButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault(); // Evita el comportamiento predeterminado del enlace/button
+                    
+                    const pedidoId = button.getAttribute('data-id');
+                    
+                    // Lógica para cargar los detalles del pedido en el modal (puedes usar AJAX)
+                    cargarDetallesPedido(pedidoId);
+                    
+                    // Muestra el modal
+                    modal.classList.remove('hidden');
+                });
+            });
+        
+            // Cierra el modal al hacer clic fuera de él
+            modal.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        
+            function cargarDetallesPedido(pedidoId) {
+                // Utiliza AJAX para cargar los detalles del pedido en el modalContent
+                // Por ejemplo:
+                modalContent.innerHTML = '<p>Cargando detalles...</p>';
+                // Realiza la solicitud AJAX para cargar los detalles del pedido
+                $.ajax({
+                    url: '/admin/orders/' + pedidoId + '/detalle',
+                    method: 'GET',
+                    success: function(response) {
+                        console.log(response);
+                        modalContent.innerHTML = response;
+                    },
+                    error: function() {
+                        modalContent.innerHTML = '<p>Error al cargar los detalles.</p>';
+                    }
+                });
+            }
+        });
+        </script>
 </x-app-layout>

@@ -49,7 +49,8 @@
                                     </td>
 
                                     <td class="px-6 py-4 whitespace-nowrap  text-gray-600">
-                                        {{ $detallePedido->updated_at }}</td>
+                                        {{ $detallePedido->updated_at }}
+                                    </td>
 
 
                                 </tr>
@@ -57,7 +58,6 @@
                                     <td colspan="6" class=" bg-slate-100">
                                         <table class="table table-bordered ml-80">
                                             <tbody>
-                                                @if($detallePedido->detalles)
 
                                                 @foreach ($detallePedido->detalles as $detalle)
                                                     <tr>
@@ -67,17 +67,13 @@
                                                             {{ $detalle->product->descripcion }}</td>
                                                         <td>Precio: $ {{ $detalle->product->price }}</td>
                                                         <td> Cantidad: {{ $detalle->amount }}</td>
-                                                        <td>Subtotal: $ {{ $detalle->product->price * $detalle->amount }}
+                                                        <td>Subtotal: $
+                                                            {{ $detalle->product->price * $detalle->amount }}
                                                         </td>
 
                                                     </tr>
-                                                    
-                                                        
-                                                   
                                                 @endforeach
-                                                @else
-                                                <h2>sin producro</h2>
-                                            @endif
+
                                             </tbody>
                                         </table>
                                     </td>
@@ -85,7 +81,9 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
+                                    <td>
+
+                                    </td>
 
                                 </tr>
                             @endforeach
