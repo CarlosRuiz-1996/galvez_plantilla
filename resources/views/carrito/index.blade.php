@@ -238,9 +238,10 @@
                                 <div class="mb-4 p-4 border border-gray-200 rounded-lg">
                                     <p class="text-xl font-semibold mb-4">Total: ${{ session('cartTotal') }}</p>
                                     <p>Fecha de entrega deseada</p>
-                                    <input type="date" name="entrega" required
+                                    <input type="date" name="entrega" id="entrega" required
                                         class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <x-input-error :messages="$errors->get('entrega')" class="mt-2" />
+                                            <span class=" text-red-600" id="err_entrega" hidden>Obligatorio</span>    
 
 
                                     <label for="message"
@@ -249,7 +250,6 @@
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Algun comentario sobre la entrega..."></textarea>
                                         <x-input-error :messages="$errors->get('message')" class="mt-2" />
-
                                     
                                     <button type="submit" id="confirmPedido"
                                         class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-semibold rounded-lg text-sm px-5 py-2.5 mt-4 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 focus:outline-none">
@@ -383,6 +383,11 @@
             document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('confirmPedido').addEventListener('click', function(e) {
                     e.preventDefault(); // Previene el envío del formulario por defecto
+                    var fecha = document.getElementById('entrega');
+                    console.log(fecha.value);
+                    if(fecha.value != "" ){
+                        document.getElementById('err_entrega').hidden = true;
+
                     if (this.checkValidity()) {
                         Swal.fire({
                             title: '¡Confirmación!',
@@ -404,6 +409,9 @@
                             }
                         });
                     }
+                }else{
+                    document.getElementById('err_entrega').hidden = false;
+                }
                 });
             });
 
