@@ -40,133 +40,127 @@
 
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <!-- Carrusel de productos -->
-                <div class="slick-carousel">
 
-                    @foreach ($productos as $producto)
-                        {{-- <div class="bg-white mr-4 p-4 border border-gray-300 shadow-sm rounded-lg producto"
-                            data-categoria="{{ $producto->category_id }}" data-marca="{{ $producto->brand_id }}"
-                            data-gramaje="{{ $producto->grammage_id }}">
-                            <h4 class="text-lg font-semibold mb-2">{{ $producto->descripcion }}</h4>
-                            <form action="" method="POST">
-                                @csrf
-                            </form>
-                            <p>Gramaje: {{ $producto->grammage->name }}</p>
-                            <img class="object-none object-left-top bg-yellow-300 w-24 h-24 ..." src="...">
+                <div x-data="{ slide: 0 }">
+                    <div class="flex items-center justify-between">
+                        <button @click="slide = (slide - 1 + {{ $productos->count() }}) % {{ $productos->count() }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                        
+                        <div class="flex space-x-4 overflow-hidden" style="width: 1100px;"> <!-- Ancho fijo de 800px -->
 
-                            <p>Presentación: {{ $producto->presentation->name }}</p>
-                            <p>Marca: {{ $producto->brand->name }}</p>
-                            <p>Precio: {{ $producto->price }}</p>
-                            <form action="{{ route('cart.add', $producto->id) }}" method="POST">
-                                @csrf
-                                <input
-                                    class="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                    type="number" name="quantity" value="1" min="1">
-                                @if (!auth()->user()->hospitals->isEmpty())
-                                    <button
-                                        class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-                                        type="submit">Agregar a producto</button>
-                                @else
-                                    <div class="mt-3 p-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                                        role="alert">
-                                        <span class="font-medium">Alerta!</span> Indica a que hospital perteneces para
-                                        poder hacer compras.
-                                    </div>
-                                @endif
-                            </form>
-                        </div> --}}
-                        <div class="w-full max-w-sm mr-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[350px] producto"
-                            data-categoria="{{ $producto->category_id }}" data-marca="{{ $producto->brand_id }}"
-                            data-gramaje="{{ $producto->grammage_id }}">
-
-
-                            <button data-modal-toggle="defaultModal" data-product-id="{{ $producto->id }}"
-                                data-product-price="${{ $producto->price }}"
-                                data-product-description="{{ $producto->descripcion }}"
-                                data-product-brand="{{ $producto->brand->name }}"
-                                data-product-grammage="{{ $producto->grammage->name }}"
-                                data-product-presentation="{{ $producto->presentation->name }}"
-                                data-product-image="{{ asset('img/products/' . $producto->image_path) }}"
-                                type="button">
-                                <img class="p-8 rounded-t-lg h-40"
-                                    @if ($producto->image_path) src="{{ asset('img/products/' . $producto->image_path) }}" alt="product image"
+                            @foreach ($productos as $key => $producto)
+                                <div x-show="slide <= {{ $key }} && {{ $key }} < slide + 4"
+                                    class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-[350px] producto"
+                                    data-categoria="{{ $producto->category_id }}"
+                                    data-marca="{{ $producto->brand_id }}"
+                                    data-gramaje="{{ $producto->grammage_id }}">
+                                    <button data-modal-toggle="defaultModal" data-product-id="{{ $producto->id }}"
+                                        data-product-price="${{ $producto->price }}"
+                                        data-product-description="{{ $producto->descripcion }}"
+                                        data-product-brand="{{ $producto->brand->name }}"
+                                        data-product-grammage="{{ $producto->grammage->name }}"
+                                        data-product-presentation="{{ $producto->presentation->name }}"
+                                        data-product-image="{{ asset('img/products/' . $producto->image_path) }}"
+                                        type="button">
+                                        <img class="p-8 rounded-t-lg h-40"
+                                            @if ($producto->image_path) src="{{ asset('img/products/' . $producto->image_path) }}" alt="product image"
                                     
                                 @else
                                 src="{{ asset('img/producto.png/') }}" alt="product image" @endif />
-                            </button>
-                            <div class="px-5 pb-5">
+                                    </button>
+                                    <div class="px-5 pb-5">
 
-                                <button data-modal-toggle="defaultModal" ddata-product-id="{{ $producto->id }}"
-                                    data-product-price="${{ $producto->price }}"
-                                    data-product-description="{{ $producto->descripcion }}"
-                                    data-product-brand="{{ $producto->brand->name }}"
-                                    data-product-grammage="{{ $producto->grammage->name }}"
-                                    data-product-presentation="{{ $producto->presentation->name }}"
-                                    data-product-image="{{ asset('img/products/' . $producto->image_path) }}"
-                                    type="button">
-                                    <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                        {{ $producto->descripcion }}
-                                    </h5>
-                                </button>
+                                        <button data-modal-toggle="defaultModal" ddata-product-id="{{ $producto->id }}"
+                                            data-product-price="${{ $producto->price }}"
+                                            data-product-description="{{ $producto->descripcion }}"
+                                            data-product-brand="{{ $producto->brand->name }}"
+                                            data-product-grammage="{{ $producto->grammage->name }}"
+                                            data-product-presentation="{{ $producto->presentation->name }}"
+                                            data-product-image="{{ asset('img/products/' . $producto->image_path) }}"
+                                            type="button">
+                                            <h5
+                                                class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                                {{ $producto->descripcion }}
+                                            </h5>
+                                        </button>
 
-                                <div class="flex items-center mt-2.5 mb-5">
-                                    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path
-                                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
-                                    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path
-                                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
-                                    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path
-                                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
-                                    <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path
-                                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
-                                    <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                                        <path
-                                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                                    </svg>
-                                    <span
-                                        class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
+                                        <div class="flex items-center mt-2.5 mb-5">
+                                            <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 22 20">
+                                                <path
+                                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                            </svg>
+                                            <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 22 20">
+                                                <path
+                                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                            </svg>
+                                            <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 22 20">
+                                                <path
+                                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                            </svg>
+                                            <svg class="w-4 h-4 text-yellow-300 mr-1" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 22 20">
+                                                <path
+                                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                            </svg>
+                                            <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                viewBox="0 0 22 20">
+                                                <path
+                                                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                                            </svg>
+                                            <span
+                                                class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">5.0</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                                                ${{ $producto->price }}
+                                            </span>
+                                          
+                                            <form action="{{ route('cart.add', $producto->id) }}" method="POST">
+                                                @csrf
+                                                <input class="mt-1 block rounded-md" type="hidden" name="quantity"
+                                                    value="1" min="1" hidden>
+                                                @if (!auth()->user()->hospitals->isEmpty())
+                                                    <button
+                                                        class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm p-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                                                        type="submit">Agregar a producto</button>
+                                                @else
+                                                    <div class="mt-3 p-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                                                        role="alert">
+                                                        <span class="font-medium">Alerta!</span> Indica a que hospital
+                                                        perteneces para
+                                                        poder hacer compras.
+                                                    </div>
+                                                @endif
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-between">
-                                    <span class="text-3xl font-bold text-gray-900 dark:text-white">
-                                        ${{ $producto->price }}
-                                    </span>
-                                    {{-- <a href="#"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
-                                    to cart</a> --}}
-                                    <form action="{{ route('cart.add', $producto->id) }}" method="POST">
-                                        @csrf
-                                        <input class="mt-1 block rounded-md" type="hidden" name="quantity"
-                                            value="1" min="1" hidden>
-                                        @if (!auth()->user()->hospitals->isEmpty())
-                                            <button
-                                                class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mt-4 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
-                                                type="submit">Agregar a producto</button>
-                                        @else
-                                            <div class="mt-3 p-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-                                                role="alert">
-                                                <span class="font-medium">Alerta!</span> Indica a que hospital
-                                                perteneces para
-                                                poder hacer compras.
-                                            </div>
-                                        @endif
-                                    </form>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                        <button @click="slide = (slide + 1) % {{ count($productos) }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
+
+
             </div>
             <hr>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
@@ -240,8 +234,8 @@
                                     <p>Fecha de entrega deseada</p>
                                     <input type="date" name="entrega" id="entrega" required
                                         class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <x-input-error :messages="$errors->get('entrega')" class="mt-2" />
-                                            <span class=" text-red-600" id="err_entrega" hidden>Obligatorio</span>    
+                                    <x-input-error :messages="$errors->get('entrega')" class="mt-2" />
+                                    <span class=" text-red-600" id="err_entrega" hidden>Obligatorio</span>
 
 
                                     <label for="message"
@@ -249,8 +243,8 @@
                                     <textarea id="message" rows="2" name="message" required
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         placeholder="Algun comentario sobre la entrega..."></textarea>
-                                        <x-input-error :messages="$errors->get('message')" class="mt-2" />
-                                    
+                                    <x-input-error :messages="$errors->get('message')" class="mt-2" />
+
                                     <button type="submit" id="confirmPedido"
                                         class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-semibold rounded-lg text-sm px-5 py-2.5 mt-4 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 focus:outline-none">
                                         Realizar Pedido
@@ -385,33 +379,33 @@
                     e.preventDefault(); // Previene el envío del formulario por defecto
                     var fecha = document.getElementById('entrega');
                     console.log(fecha.value);
-                    if(fecha.value != "" ){
+                    if (fecha.value != "") {
                         document.getElementById('err_entrega').hidden = true;
 
-                    if (this.checkValidity()) {
-                        Swal.fire({
-                            title: '¡Confirmación!',
-                            text: '¿Estás seguro de que deseas realizar el pedido?',
-                            icon: 'question',
-                            showCancelButton: true,
-                            confirmButtonText: 'Sí, realizar pedido',
-                            cancelButtonText: 'Cancelar'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // El usuario confirmó, enviar el formulario
-                                // document.querySelector('form').submit();
-                                document.getElementById('miFormulario').submit();
-                                // Swal.fire(
-                                //     'Pedido realizado!',
-                                //     'Pronto recibira su pedido.',
-                                //     'success'
-                                // )
-                            }
-                        });
+                        if (this.checkValidity()) {
+                            Swal.fire({
+                                title: '¡Confirmación!',
+                                text: '¿Estás seguro de que deseas realizar el pedido?',
+                                icon: 'question',
+                                showCancelButton: true,
+                                confirmButtonText: 'Sí, realizar pedido',
+                                cancelButtonText: 'Cancelar'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // El usuario confirmó, enviar el formulario
+                                    // document.querySelector('form').submit();
+                                    document.getElementById('miFormulario').submit();
+                                    // Swal.fire(
+                                    //     'Pedido realizado!',
+                                    //     'Pronto recibira su pedido.',
+                                    //     'success'
+                                    // )
+                                }
+                            });
+                        }
+                    } else {
+                        document.getElementById('err_entrega').hidden = false;
                     }
-                }else{
-                    document.getElementById('err_entrega').hidden = false;
-                }
                 });
             });
 
@@ -461,29 +455,5 @@
                     }
                 }
             }
-
-            $(document).ready(function() {
-                $('.slick-carousel').slick({
-                    slidesToShow: 4, // Número de productos que se muestran en cada slide
-                    slidesToScroll: 1, // Número de productos que se desplazan en cada cambio de slide
-                    autoplay: false, // Reproducción automática del carrusel
-                    // autoplaySpeed: 3000, // Velocidad de reproducción automática en milisegundos
-                    responsive: [{
-                            breakpoint: 768, // Cambios en la configuración en pantallas más pequeñas
-                            settings: {
-                                slidesToShow: 2,
-                            }
-                        },
-                        {
-                            breakpoint: 576, // Cambios en la configuración en pantallas aún más pequeñas
-                            settings: {
-                                slidesToShow: 1,
-                            }
-                        }
-                    ],
-                    prevArrow: '<button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" aria-label="Anterior">Anterior</button>',
-                    nextArrow: '<button class="mt-0 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" aria-label="Siguiente">Siguiente</button>'
-                });
-            });
         </script>
 </x-app-layout>
