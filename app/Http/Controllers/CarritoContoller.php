@@ -181,17 +181,24 @@ class CarritoContoller extends Controller
 
     public function generarPedido(Request $request)
     {
+
+        $request->validate([
+            'entrega' => ['required', 'string'],
+            // 'message' => ['required', 'string'],
+        ], [
+            'entrega.required' => 'La fecha es obligatoria.',
+            // 'message.required' => 'comentarios es obligatorio.'
+        ]);
+    
         // Obtén los datos necesarios para la orden desde el formulario
-        // $total = $request->input('total');
         $fecha_entrega = $request->input('entrega');
         $message = $request->input('message');
-
+        if (empty($message)) {
+            $message = 'Sin comentarios.';
+        }
         // Accede al ID del hospital relacionado con el usuario
         $user = auth()->user();
-
         $hospitalId = $user->hospitals[0]->id;
-
-        // Otras columnas de la tabla Orders que necesites
 
         // Crea la orden
         $order = new Order();
@@ -226,6 +233,6 @@ class CarritoContoller extends Controller
 
         $this->dropsession();
 
-        return view('dashboard')->with('status', 'Orden creada exitosamente.');
+        return redirect()->route('cart.viewCart')->with('status', 'Orden creada exitosamente.');
     }
 }
