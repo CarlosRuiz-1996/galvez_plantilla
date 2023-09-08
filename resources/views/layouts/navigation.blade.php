@@ -77,6 +77,19 @@
                         )">
                             {{ __('Catalogos') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.almacen')" :active="Str::startsWith(
+                            request()
+                                ->route()
+                                ->getName(),
+                            'admin.almacen',
+                        )">
+                            <div class="nav-link-with-cart">
+                                <i class="fas fa-shopping-cart"></i> <!-- Ícono de carrito -->
+                                {{ __('Almacen') }}
+                                {{-- <span class="cart-count">{{ count(session('cart', [])) }}</span> --}}
+                                <!-- Cantidad de productos en el carrito -->
+                            </div>
+                        </x-nav-link>
                     @endif
                     @if (!Auth::user()->hasRole('Admin'))
                         <x-nav-link :href="route('carrito.carrito')" :active="Str::startsWith(
