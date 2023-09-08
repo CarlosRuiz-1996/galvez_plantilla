@@ -29,6 +29,7 @@
 
                             </tr>
                         </thead>
+                        {{-- {{var_dump($detallePedidos)}}{{die}} --}}
                         <tbody class="text-gray-500">
                             @foreach ($detallePedidos as $detallePedido)
                                 <tr class="toggle-pedido ">

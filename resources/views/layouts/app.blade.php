@@ -15,14 +15,8 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/table-filter.js'])
-    <!-- Agrega la siguiente línea para cargar Chart.js -->
-    {{-- <script src="https://cdnjs.com/libraries/Chart.js"> --}}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    {{-- </script> --}}
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js']);
 
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </head>
 
@@ -46,6 +40,11 @@
 
 
     </div>
+    <script src="{{ asset('js/table-filter.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </body>
 
 </html>

@@ -1,5 +1,24 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById('table-search');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', () => {
+            const searchText = searchInput.value.toLowerCase();
+
+            tableRows.forEach(row => {
+                const rowData = row.textContent.toLowerCase();
+                row.style.display = rowData.includes(searchText) ? 'table-row' : 'none';
+            });
+        });
+
+
+        
+    }
+
+    // Resto de tu código aquí
+
 const filterRadioButtons = document.querySelectorAll('[name="filter-radio"]');
-const searchInput = document.getElementById('table-search');
+// const searchInput = document.getElementById('table-search');
 const tableRows = document.querySelectorAll('.table-row');
 
 filterRadioButtons.forEach(button => {
@@ -8,14 +27,6 @@ filterRadioButtons.forEach(button => {
     });
 });
 
-searchInput.addEventListener('input', () => {
-    const searchText = searchInput.value.toLowerCase();
-
-    tableRows.forEach(row => {
-        const rowData = row.textContent.toLowerCase();
-        row.style.display = rowData.includes(searchText) ? 'table-row' : 'none';
-    });
-});
 
 
 filterRadioButtons.forEach(button => {
@@ -32,3 +43,7 @@ filterRadioButtons.forEach(button => {
         });
     });
 });
+
+});
+
+
