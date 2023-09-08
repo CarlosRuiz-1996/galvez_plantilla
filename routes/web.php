@@ -30,7 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/hospitals/editar/{id?}', [HospitalController::class, 'editar'])->name('admin.hospitals.editar');
     Route::delete('admin/hospitals/eliminar/{id?}', [HospitalController::class, 'eliminar'])->name('admin.hospitals.eliminar');
     Route::put('admin/hospitals/update', [HospitalController::class, 'update'])->name('admin.hospitals.update');
-    
+    Route::get('/admin/hospitals/crear', [HospitalController::class, 'create'])->name('admin.hospitals.create');
+    Route::post('/admin/hospitals/crear', [HospitalController::class, 'crear'])->name('admin.hospitals.crear');
     Route::get('hospitals/asignar', [HospitalController::class, 'list'])->name('hospitals.asignar');
     Route::post('hospitals/asignar/save', [HospitalController::class, 'asignar'])->name('hospitals.asignar.save');
 
