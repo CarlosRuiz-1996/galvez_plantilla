@@ -207,7 +207,7 @@
                                                     <input type="number" id="quantity_{{ $productId }}"
                                                         name="product_quantities[{{ $productId }}]"
                                                         class="w-16 h-10 text-center rounded-md border border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                                        value="{{ $productData['quantity'] }}" required>
+                                                        value="{{ $productData['quantity'] }}" disabled>
                                                     <a type="button"
                                                         class="text-gray-500 font-semibold text-xl focus:outline-none"
                                                         href="{{ route('cart.update', ['accion' => 'increase', 'id' => $productId]) }}">+</a>
