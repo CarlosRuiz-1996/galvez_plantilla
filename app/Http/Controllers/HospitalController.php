@@ -146,4 +146,53 @@ class HospitalController extends Controller
 
         return redirect()->route('dashboard')->with('status', 'Hospital asignado exitosamente, Bienvenido.');
     }
+    public function crear(Request $request){
+                // Validación del formulario
+        $validate = $this->validate($request, [
+            'name' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string'],
+            'phone' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'max:255'],
+            'contact_name' => ['required', 'string', 'max:255'],
+            'contact_phone' => ['required', 'string', 'max:255'],
+            'contact_email' => ['required', 'string', 'max:255'],
+        ]);
+
+        // Recoger valores del formulario
+        $nombre = $request->input('name');
+        $direccion = $request->input('address');
+        $telefono = $request->input('phone');
+        $correo = $request->input('email');
+        $contacto_nombre = $request->input('contact_name');
+        $contacto_telefono = $request->input('contact_phone');
+        $contacto_correo = $request->input('contact_email');
+
+        // Crear una nueva instancia del modelo Hospital
+        $hospital = new Hospital();
+
+        // Asignar los valores a las propiedades del modelo
+        $hospital->name = $nombre;
+        $hospital->address = $direccion;
+        $hospital->phone = $telefono;
+        $hospital->email = $correo; // Corregir esta línea para asignar el valor correcto
+        $hospital->contact_name = $contacto_nombre;
+        $hospital->contact_phone = $contacto_telefono;
+        $hospital->contact_email = $contacto_correo;
+        $hospital->image_path="imagen.png";
+
+        // Guardar el nuevo hospital en la base de datos
+        $hospital->save();
+
+        // Redireccionar a la página deseada después de la inserción
+        return redirect()->route('admin.hospitals')->with('status', 'Hospital agregado correctamente');
+
+    }
+    public function create()
+    {
+        // Mostrar el formulario de creación
+        return view('admin.hospitals.editar', [
+            'hospital' => new Hospital(), // Crear una instancia vacía para el formulario de creación
+        ]);
+    }
+
 }
