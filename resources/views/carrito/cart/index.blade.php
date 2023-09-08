@@ -130,9 +130,9 @@
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 ID
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            {{-- <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Hospital ID
-                            </th>
+                            </th> --}}
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Fecha de entrega
                             </th>
@@ -156,9 +156,9 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $pedido->id }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                {{-- <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $pedido->hospital->name ?? 'N/A' }}
-                                </td>
+                                </td> --}}
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {{ $pedido->deadline }}
                                 </td>
@@ -173,7 +173,8 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                   $ {{ $pedido->total }}
+                                   ${{ number_format($pedido->total, 2, '.', ',') }}
+
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a type="button" class="text-orange-700 detalles-btn" data-id="{{ $pedido->id }}">

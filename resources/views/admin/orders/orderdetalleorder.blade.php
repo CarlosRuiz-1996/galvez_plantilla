@@ -65,10 +65,10 @@
                                                         <td></td>
                                                         <td>Producto:
                                                             {{ $detalle->product->descripcion }}</td>
-                                                        <td>Precio: $ {{ $detalle->product->price }}</td>
+                                                        <td>Precio: $ {{ $detalle->product->total }}</td>
                                                         <td> Cantidad: {{ $detalle->amount }}</td>
                                                         <td>Subtotal: $
-                                                            {{ $detalle->product->price * $detalle->amount }}
+                                                            {{ $detalle->product->total * $detalle->amount }}
                                                         </td>
 
                                                     </tr>

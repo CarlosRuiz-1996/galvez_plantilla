@@ -5,10 +5,19 @@
                     producto
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    marca
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    presentación
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     costo
                 </th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     cantidad
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    subtotal
                 </th>
             </tr>
         </thead>
@@ -23,15 +32,26 @@
                         {{ $detalle->product->descripcion ?? 'N/A' }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        {{ $detalle->product->price ?? 'N/A' }}
+                        {{ $detalle->product->brand->name ?? 'N/A' }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {{ $detalle->product->presentation->name ?? 'N/A' }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                       ${{ number_format( $detalle->product->total, 2, '.', ',') }}
+
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         {{ $detalle->amount }}
                     </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                         ${{ number_format($detalle->amount * $detalle->product->total, 2, '.', ',') }}
+
+                    </td>
                 </tr>
 
                 @php
-                    $subtotal = $detalle->product->price * $detalle->amount; // Calcula el subtotal
+                    $subtotal = $detalle->product->total * $detalle->amount; // Calcula el subtotal
                     $total += $subtotal; // Suma el subtotal al total
                 @endphp
             @endforeach
@@ -42,7 +62,8 @@
                     Total:
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap font-semibold">
-                    $ {{ $total }}
+                   ${{ number_format($total, 2, '.', ',') }}
+
                 </td>
             </tr>
         </tbody>
