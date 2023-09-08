@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\CatalogController;
+use App\Http\Controllers\almacenController;
 use App\Http\Controllers\CarritoContoller;
 use App\Http\Controllers\HospitalController;
 use App\Http\Controllers\OrderController;
@@ -64,7 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::get('carrito/update/{id?}/{accion?}', [CarritoContoller::class, 'updateCart'])->name('cart.update');
     Route::get('carrito/removeProduct/{productId?}', [CarritoContoller::class, 'removeProduct'])->name('cart.removeProduct');
     Route::post('carrito/generar-pedido', [CarritoContoller::class, 'generarPedido'])->name('cart.generarPedido');
-
+    //almacen
+    Route::get('admin/almacen', [almacenController::class, 'index'])->name('admin.almacen');
+    Route::get('/admin/almacen/editar-stock/{id}', [almacenController::class, 'editStock'])->name('admin.almacen.editStock');
+    Route::put('/admin/almacen/actualizar-stock/{id}', [almacenController::class, 'updateStock'])->name('admin.almacen.actualizar-stock');
 });
 
 require __DIR__ . '/auth.php';
